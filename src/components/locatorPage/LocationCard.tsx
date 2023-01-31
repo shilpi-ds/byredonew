@@ -64,7 +64,7 @@ function opentime(e: any) {
                data-ya-track={`viewDetail -${result.rawData.name}`}
                eventName={`viewDetail -${result.rawData.name}`}
                rel="noopener noreferrer"
-               href={`/${result.rawData.id}`}>{result.rawData.name}
+               href={result.rawData.slug}>{result.rawData.name}
               </Link></h2>
               {typeof result.distance != "undefined" ?
                 <div className="distance">
