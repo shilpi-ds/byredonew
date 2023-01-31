@@ -109,7 +109,7 @@ function opentime(e: any) {
             </div>
          
              <div className="button-bx">
-              <Link type="button" href={`/${result.rawData.slug}`} className=" btn notHighlight "
+              <Link type="button" href={result.rawData.slug} className=" btn notHighlight "
               data-ya-track={`viewStore -${result.rawData.name}`}
               eventName={`viewStore -${result.rawData.name}`}
               rel="noopener noreferrer"
