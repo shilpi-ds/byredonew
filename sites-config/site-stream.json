@@ -1,0 +1,21 @@
+{
+  "$id": "site-entity",
+  "filter": {
+    "entityIds": ["global-data"] 
+  },
+  "source": "knowledgeGraph",
+  "fields": [
+    "c_headerMenus",
+    "c_byradoLogo",
+    "c_bannerDescription",
+    "c_bannerImage",
+    "c_bannerTitle",
+    "c_footerHelpSection",
+    "c_servicesFooter",
+    "c_footerStoreLocator"
+  ],
+  "localization": {
+    "locales": ["en_GB"],
+    "primary": false
+  }
+}
