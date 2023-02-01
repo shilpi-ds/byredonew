@@ -2,8 +2,8 @@ import * as React from "react";
 import Cta from "../commons/cta";
 import Hours from "../commons/hours";
 import woodtexture from "../../images/wood-texture.jpg";
-import mapimage from "../../images/map.svg";
-import Phonesvg from "../../images/phone.svg";
+import mapimage from "../../images/loc1.svg";
+import Phonesvg from "../../images/loc2.svg";
 import Address from "../commons/Address";
 import GetDirection from "../commons/GetDirection";
 import { StaticData } from "../../../sites-global/staticData";
@@ -14,6 +14,7 @@ import CustomMap from "./CustomMap";
 const Contact = (props: any) => {
   const {
     address,
+    name,
     phone,
     latitude,
     longitude,
@@ -35,7 +36,7 @@ const Contact = (props: any) => {
             <img className=" " src={mapimage} width="20" height="20" alt="mapimage" />
           </div>
           <div className="  address-text notHighlight">
-            {address.line1}
+           <div>{name}</div> {address.line1}
             <div>{address.line2 && <div>{address.line2}</div>}</div>
             <div>{address.city}</div>
             <div>{address.postalCode}</div>

@@ -1,6 +1,6 @@
 import * as React from "react";
 import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
-import marker from "../../images/MGMpin.svg";
+import marker from "../../images/redopin.svg";
 
 const containerStyle = {
   width: "100%",

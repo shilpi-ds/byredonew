@@ -476,16 +476,17 @@ breadcrumbScheme.push({
 
       <div className="container">
             <div className='banner-text banner-dark-bg justify-center text-center'>
-              <h1 className="">{name} {name}</h1>
+              <h1 className="">{name}</h1>
                 <div className="openClosestatus detail-page closeing-div">
                   <OpenClose timezone={timezone} hours={hours} />
                 </div> 
             </div>
           </div>
           <div className="location-information">
-        <Contact address={address} 
+        <Contact address={address} name={name}
            phone={mainPhone} latitude={yextDisplayCoordinate ? yextDisplayCoordinate.latitude : displayCoordinate?.latitude}
            yextDisplayCoordinate={yextDisplayCoordinate} longitude={yextDisplayCoordinate ? yextDisplayCoordinate.longitude : displayCoordinate?.longitude} hours={hours}  additionalHoursText={additionalHoursText} ></Contact>
+           {/* <div className="work-hours"><OpenClose timezone={timezone} hours={hours} /></div> */}
           {
             hours ?
               <div className="map-sec" id="map_canvas">

@@ -11,11 +11,11 @@ import {
   twMerge,
   useComposedCssClasses,
 } from "../../hooks/useComposedCssClasses";
-import Mapicon2 from "../../images/MGMpin.svg";
+import Mapicon2 from "../../images/redopin.svg";
 import clustericon from "../../images/cluster.png";
 import mapimage from "../../images/map.svg";
 import timesvg from "../../images/watch-icn.svg";
-import Hovermap from "../../images/MGMhover1.svg"
+import Hovermap from "../../images/redopinhover.svg"
 import Hours from "../commons/hours";
 import reactElementToJSXString from "react-element-to-jsx-string";
 import Nav from "../layouts/Nav";

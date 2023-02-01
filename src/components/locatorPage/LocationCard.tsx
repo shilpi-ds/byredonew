@@ -2,7 +2,10 @@ import * as React from "react";
 import { CardComponent } from "@yext/search-ui-react";
 import { Location } from "../../types/search/locations";
 import GetDirection from "../commons/GetDirection";
-import redmapimage from "../../images/red-map.svg";
+//import redmapimage from "../../images/red-map.svg";
+import loc1 from "../../images/loc1.svg";
+import loc2 from "../../images/loc2.svg";
+import loc3 from "../../images/loc3.svg";
 import timesvg from "../../images/watch-icn.svg"
 import Address from "../commons/Address";
 import OpenClose from "../commons/openClose";
@@ -58,8 +61,8 @@ function opentime(e: any) {
         <div className="center-column">
           <div className="lp-param-results lp-subparam-hours">
             <div className="location-name-miles icon-row">
-              <div className="icon text-black relative"> <img className=" " src={redmapimage} width="20" height="20"
-                alt={''} /><span className="map-count">D</span></div>
+              <div className="icon text-black relative"> <img className=" " src={loc1} width="50" height="50"
+                alt={''} /></div>
               <h2><Link className="inline-block notHighlight"
                data-ya-track={`viewDetail -${result.rawData.name}`}
                eventName={`viewDetail -${result.rawData.name}`}
@@ -72,20 +75,28 @@ function opentime(e: any) {
                 </div>
                 : ''}
             </div>
-
+           
             
             <div className="icon-row content-col address-with-availablity notHighlight">
               <Address address={address} />
+              <div className="loc-phone">
+              <div className="icon-time"> <img className=" " src={loc2} width="20" height="20"
+                alt={''} /></div>
+                <h4><a href={`tel:${result.rawData.mainPhone}`}>{result.rawData.mainPhone}</a></h4></div>
               {result.rawData.hours ? <>
               <div className="mt-2">
               {/* <h6>Opening Hours</h6> */}
                 {result.rawData.hours?.reopenDate ? <>
-                  <div className="icon"> <img className=" " src={timesvg} width="20" height="20" alt="" /> </div>
+                  {/* <div className="icon"> <img className=" " src={loc3} width="20" height="20" alt="" /> </div> */}
+                  <div className="icon-time"> <img className=" " src={loc3} width="20" height="20"
+                alt={''} /></div>
                   <div className=" flex open-now-string items-center " data-id={`main-shop-${result.rawData.id}`} onClick={opentime}>
                     {StaticData.tempClosed}
                   </div>
                 </>
                   : <> 
+                   <div className="icon-time"> <img className=" " src={loc3} width="20" height="20"
+                alt={''} /></div>
                     <div className=" flex open-now-string items-center" data-id={`main-shop-${result.rawData.id}`} >
                       <OpenClose timezone={result.rawData.timezone} hours={result.rawData.hours} deliveryHours={result.rawData.hours}></OpenClose>
                     </div></>}

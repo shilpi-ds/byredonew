@@ -678,6 +678,9 @@ flex-direction: column;
     /* text-align: center; */
    width: 50%; 
    padding: auto;
+   margin-top: 15px;
+   margin-bottom: 15px;
+   width: 60%;
    
 }
 /* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
@@ -760,9 +763,23 @@ margin-top: 20px;
 .text-on-image h3{
     font-size: 35px;
     text-align: center;
+    margin-top: 45px;
 }
 .text-on-image p{
     font-size: 25px;
     text-align: center;
+    margin-top: 25px;
+    width: 70%;
+    display: inline-block;
 }
+
+.icon-row .icon-time {
+    position: absolute;
+    
+    left: 0px;
+}
+.about-description{
+  margin-top: 30px;
+}
+
 
