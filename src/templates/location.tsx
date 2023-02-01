@@ -42,7 +42,8 @@ import Header from "../components/layouts/header";
 import HeaderBanner from "../components/commons/HeaderBanner";
 import Accordion from "../components/commons/Accordion";
 //import PhotoSlider from "../components/locationDetails/PhotoSlider";
-import {apikey_for_entity, baseuRL,stagingBaseurl,AnalyticsEnableDebugging,AnalyticsEnableTrackingCookie, favicon } from "../../sites-global/global";
+import {apikey_for_entity, baseuRL,stagingBaseurl,AnalyticsEnableDebugging,AnalyticsEnableTrackingCookie } from "../../sites-global/global";
+import favicon  from "../images/vector.png";
 import {
   AnalyticsProvider,
   AnalyticsScopeProvider,

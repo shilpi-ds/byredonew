@@ -14,8 +14,9 @@ import { Address } from "../types/search/locations";
 import { useSearchActions } from "@yext/search-headless-react";
 import { useEffect } from "react";
 import SearchLayout from "../components/locatorPage/SearchLayout";
-import {stagingBaseurl, favicon, AnalyticsEnableDebugging, AnalyticsEnableTrackingCookie} from "../../sites-global/global"
+import {stagingBaseurl, AnalyticsEnableDebugging, AnalyticsEnableTrackingCookie} from "../../sites-global/global"
 import Newsletter from "../components/locatorPage/Newsletter";
+import favicon  from "../images/vector.png";
 import { JsonLd } from "react-schemaorg";
 import { StaticData } from "../../sites-global/staticData";
 import Header from "../components/layouts/header";
