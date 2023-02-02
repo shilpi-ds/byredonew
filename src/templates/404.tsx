@@ -9,7 +9,7 @@ import {
 } from "@yext/pages";
 import * as React from "react";
 // import { favicon } from "../../sites-global/global";
-import favicon  from "../images/vector.png";
+import { favicon } from "../../sites-global/global";
 import { StaticData } from "../../sites-global/staticData";
 import PageLayout from "../components/layouts/PageLayout";
 export const config: TemplateConfig = {

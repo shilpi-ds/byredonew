@@ -4,7 +4,7 @@ export const cookieText =
 export const cookiesUrl = "https://www.matalan.co.uk/corporate/cookies";
 export const baseuRL = "https://liveapi-sandbox.yext.com/v2/accounts/me/entities/geosearch?radius=500"
 export const apikey_for_entity = "ea7ea73738da090eba9cafbc45220b0b"
-export const favicon="../../src/images/vector.png";
+export const favicon="https://th.bing.com/th/id/OIP.lsVV6Hwk-S3fpho7QRs9BAAAAA?w=114&h=114&c=7&r=0&o=5&pid=1.7";
 export const apiKey = "f5db9f723a7d2fd5badfb2d57d1ab853";
 export const googleApikey = "AIzaSyDZNQlSlEIkFAct5VzUtsP4dSbvOr2bE18";
 export const regionNames = new Intl.DisplayNames(['en'], { type: 'region' })

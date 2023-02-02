@@ -16,7 +16,7 @@ import { useEffect } from "react";
 import SearchLayout from "../components/locatorPage/SearchLayout";
 import {stagingBaseurl, AnalyticsEnableDebugging, AnalyticsEnableTrackingCookie} from "../../sites-global/global"
 import Newsletter from "../components/locatorPage/Newsletter";
-import favicon  from "../images/vector.png";
+import { favicon } from "../../sites-global/global";
 import { JsonLd } from "react-schemaorg";
 import { StaticData } from "../../sites-global/staticData";
 import Header from "../components/layouts/header";
