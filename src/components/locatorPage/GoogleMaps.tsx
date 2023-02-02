@@ -14,7 +14,7 @@ import {
 import Mapicon2 from "../../images/redopin.svg";
 import clustericon from "../../images/cluster.png";
 import mapimage from "../../images/map.svg";
-import timesvg from "../../images/watch-icn.svg";
+import timesvg from "../../images/loc3.svg";
 import Hovermap from "../../images/redopinhover.svg"
 import Hours from "../commons/hours";
 import reactElementToJSXString from "react-element-to-jsx-string";
@@ -26,7 +26,7 @@ import Opening from "../commons/openClose";
 import GetDirection from "../commons/GetDirection";
 import { MarkerClusterer } from "@googlemaps/markerclusterer";
 import Address from "../commons/Address";
-import Phonesvg from "../../images/phone.svg";
+import Phonesvg from "../../images/loc2.svg";
 import { ResultsCount } from "@yext/search-ui-react";
 import OpenClose from "../commons/openClose";
 import $ from "jquery";
@@ -500,7 +500,7 @@ function UnwrappedGoogleMaps({
             {/* <div className="icon"> <img className=" " src={mapimage} width="20" height="20"
         alt="" /></div> */}
             <h2>
-              <a className="inline-block notHighlight" href={`/${result.rawData.id}`}>
+              <a className="inline-block notHighlight" href={result.rawData.id}>
                 {result.rawData.name}
               </a>
             </h2>
@@ -561,7 +561,7 @@ function UnwrappedGoogleMaps({
           )}
         </div>
         <div className="button-bx !ml-4 !mb-0">
-          <a type="button" href={`/${result.rawData.id}`} className="btn">
+          <a type="button" href={result.rawData.id} className="btn">
             {/* <div dangerouslySetInnerHTML={{__html: View_Store}}/> */}
             {StaticData.StoreDetailbtn}
           </a>
