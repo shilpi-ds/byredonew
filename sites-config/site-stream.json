@@ -15,7 +15,10 @@
     "c_footerStoreLocator",
     "c_metaDescription",
     "c_metaTitle",
-    "c_canonicalURL"
+    "c_canonicalURL",
+    "c_customerCare",
+    "c_emailAddress",
+    "mainPhone"
   ],
   "localization": {
     "locales": ["en_GB"],

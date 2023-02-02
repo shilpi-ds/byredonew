@@ -42,7 +42,8 @@ export const config: TemplateConfig = {
       "c_byradoLogo",
       "c_footerHelpSection",
     "c_servicesFooter",
-    "c_footerStoreLocator"
+    "c_footerStoreLocator",
+
      
     ],
     // Defines the scope of entities that qualify for this stream.
@@ -130,7 +131,7 @@ export const getHeadConfig: GetHeadConfig<TemplateRenderProps> = ({
        type: "meta",
        attributes: {
          property: "og:image",
-         content: document._site.c_byradoLogo.image.url?document._site.c_byradoLogo.image.url:favicon,
+         content: favicon,
        },
      },
      {
@@ -232,7 +233,8 @@ const Locator: Template<TemplateRenderProps>= ({
         </SearchHeadlessProvider>
       
    
-        <Footer ByredoHelp={_site.c_footerHelpSection} ByredoServices={_site.c_servicesFooter} ByredoLocator={_site.c_footerStoreLocator}/>
+        <Footer ByredoHelp={_site.c_footerHelpSection} ByredoServices={_site.c_servicesFooter} ByredoLocator={_site.c_footerStoreLocator} customercare={_site.c_customerCare} footemail={_site.c_emailAddress} footphone={_site.mainPhone}/>
+  
       </AnalyticsScopeProvider>
       </AnalyticsProvider>
     </>

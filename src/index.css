@@ -781,5 +781,16 @@ margin-top: 20px;
 .about-description{
   margin-top: 30px;
 }
-
-
+.email-foot {
+  display:flex;
+}
+.phone-foot {
+  display:flex;
+  margin-top: 10px;
+}
+.email-foot a{
+  padding-left: 15px;
+}
+.phone-foot a{
+  padding-left: 15px;
+}

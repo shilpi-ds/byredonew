@@ -25,6 +25,7 @@ import ResultsCount from "./ResultsCount";
 import useFetchResults from "../../hooks/useFetchResults";
 import { Link } from "@mui/material";
 import { AnswerExperienceConfig } from "../../config/answersHeadlessConfig";
+import FilterAwesome from "./FilterAwesome";
 
 var params1: any = { latitude: center_latitude, longitude:center_longitude }
 var mapzoom = 8;
@@ -303,7 +304,7 @@ const loading = useSearchState(s=>s.searchStatus.isLoading);
                 <span dangerouslySetInnerHTML={{ __html: search_icn }} />
                 </button>
           </div>
-
+          <FilterAwesome/>
 <div className="fliter-sec">
           <button className="useMyLocation" title="Search using your current location!" id="useLocation" onClick={onClick}>
               <span className="icon" dangerouslySetInnerHTML={{ __html: UseMylocationsvg }} />

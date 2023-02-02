@@ -214,7 +214,7 @@ export const getHeadConfig: GetHeadConfig<TemplateRenderProps> = ({
         type: "meta",
         attributes: {
           property: "og:image",
-          href: document._site.c_byradoLogo.image.url?document._site.c_byradoLogo.image.url:favicon,
+          href: favicon,
         },
       },
       {
@@ -531,7 +531,7 @@ breadcrumbScheme.push({
       </AnalyticsProvider>
      
       
-      <Footer ByredoHelp={_site.c_footerHelpSection} ByredoServices={_site.c_servicesFooter} ByredoLocator={_site.c_footerStoreLocator}/>
+      <Footer ByredoHelp={_site.c_footerHelpSection} ByredoServices={_site.c_servicesFooter} ByredoLocator={_site.c_footerStoreLocator} customercare={_site.c_customerCare} footemail={_site.c_emailAddress} footphone={_site.mainPhone}/>
     </>
   );
 };

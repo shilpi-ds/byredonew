@@ -1,10 +1,13 @@
 import * as React from "react";
-
-
+import emailfoot from "../../images/email-foot.png";
+import phonefoot from "../../images/phone-foot.png";
 var currentTime = new Date()
 var year = currentTime.getFullYear()
 
 type props = {
+   customercare: any;
+   footemail : any;
+   footphone:any;
    ByredoHelp: any;
    ByredoServices: any;
    ByredoLocator: any;
@@ -12,7 +15,7 @@ type props = {
   
 
   const Footer = (props: any) => {
-   const {ByredoHelp, ByredoServices,ByredoLocator } = props;
+   const {customercare,footemail,footphone,ByredoHelp, ByredoServices,ByredoLocator } = props;
 console.log(ByredoLocator);
    return (
       <>
@@ -20,13 +23,26 @@ console.log(ByredoLocator);
             <div className="container">
                
                
-                  <div className="column">
-                       <div className="social-media">
-                        <a href="#" target="_blank" title="Facebook" rel="noreferrer"><i className="fa fa-facebook-square" aria-hidden="true"></i></a>
-                        <a href="#" target="_blank" title="Instagram" rel="noreferrer"><i className="fa fa-instagram" aria-hidden="true"></i></a>
-                        <a href="#" target="_blank" title="Twitter" rel="noreferrer"><i className="fa fa-twitter" aria-hidden="true"></i></a>
-                     </div>
-                  </div>
+                  <div className="footer-block">
+                  <h4 className="footer-block-title">{customercare}</h4>
+                  {/* <div className="list-none">
+                  
+                  <div className="icon-email"> <a href={footemail.link}><img className=" " src={emailfoot} width="20" height="20"
+                alt={''} />{footemail.label}</a></div>
+                    <div className="icon-phone"> <img className=" " src={phonefoot} width="20" height="20"
+                alt={''} /><a href={`tel:${footphone}`}>{footphone}</a></div>
+                     </div>*/}
+                     
+                 
+                  <div className="footer-about">
+                    <div className="email-foot"><img className=" " src={emailfoot} width="20" height="20"
+                alt={''} />
+                    <a href={footemail.link}>{footemail.label}</a>
+
+                    </div>
+                    <div className="phone-foot"><img className=" " src={phonefoot} width="20" height="20"
+                alt={''} /><a href={`tel:${footphone}`}>{footphone}</a></div>
+                  </div> </div> 
                   <div className="footer-block">
 
                
