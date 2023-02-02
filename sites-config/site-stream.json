@@ -12,7 +12,10 @@
     "c_bannerTitle",
     "c_footerHelpSection",
     "c_servicesFooter",
-    "c_footerStoreLocator"
+    "c_footerStoreLocator",
+    "c_metaDescription",
+    "c_metaTitle",
+    "c_canonicalURL"
   ],
   "localization": {
     "locales": ["en_GB"],

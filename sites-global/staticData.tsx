@@ -1,6 +1,6 @@
 export const StaticData = {
-    Meta_title:" Byredo Demo Store - Online Accessories for women",
-    Meta_description:"Visit Byredo Demo Store | Byredo is your local great value store for women",
+    Meta_title:"BYREDO Official Site | Perfumes, Candles &amp; Body Care",
+    Meta_description:"Shop Byredo’s Collection of Perfumes, Candles, Makeup, Leather And Body Care.Free shipping &amp; Free returns. Complimentary samples.",
     locator_breadcrumb:"Store Locator",
     FindLocationtext:"Find a Location",
     Usemylocation:"Use my location",

@@ -66,7 +66,7 @@ export const getHeadConfig: GetHeadConfig<TemplateRenderProps> = ({
   document,
 }): HeadConfig => {
  return {
-   title:`${document.c_meta_title?document.c_meta_title:`Byredo Merchants Near Me - Find Byredo Branch Locator Here.`}`,
+   title:`${document.c_metaTitle?document.c_metaTitle:`BYREDO Official Site | Perfumes, Candles &amp; Body Care.`}`,
    charset: "UTF-8",
    viewport: "width=device-width, initial-scale=1",
    tags: [
@@ -74,7 +74,7 @@ export const getHeadConfig: GetHeadConfig<TemplateRenderProps> = ({
        type: "meta",
        attributes: {
          name: "description",
-         content: `${document.c_meta_description?document.c_meta_description:`View Byredo Merchants near you today at Byredo. We stock high-quality, robust products at competitive rates.`}`,
+         content: `${document.c_metaDescription?document.c_metaDescription:`Shop Byredo’s Collection of Perfumes, Candles, Makeup, Leather And Body Care.Free shipping &amp; Free returns. Complimentary samples.`}`,
        },
      },
 
@@ -116,14 +116,14 @@ export const getHeadConfig: GetHeadConfig<TemplateRenderProps> = ({
        type: "meta",
        attributes: {
          property: "og:description",
-         content: `${document.c_meta_description?document.c_meta_description:`View Byredo Merchants near you today at Byredo. We stock high-quality, robust products at competitive rates.`}`,
+         content: `${document.c_metaDescription?document.c_metaDescription:`Shop Byredo’s Collection of Perfumes, Candles, Makeup, Leather And Body Care.Free shipping &amp; Free returns. Complimentary samples.`}`,
        },
      },
      {
        type: "meta",
        attributes: {
          property: "og:title",
-         content: `${document.c_meta_title?document.c_meta_title:`Byredo Merchants Near Me - Find Byredo Branch Locator Here.`}`,
+         content: `${document.c_metaTitle?document.c_metaTitle:`BYREDO Official Site | Perfumes, Candles &amp; Body Care.`}`,
        },
      },
      {
@@ -144,14 +144,14 @@ export const getHeadConfig: GetHeadConfig<TemplateRenderProps> = ({
       type: "meta",
       attributes: {
         name: "twitter:description",
-        content:`${document.c_meta_description?document.c_meta_description:`View Byredo Merchants near you today at Byredo. We stock high-quality, robust products at competitive rates.`}`,
+        content:`${document.c_metaDescription?document.c_metaDescription:`Shop Byredo’s Collection of Perfumes, Candles, Makeup, Leather And Body Care.Free shipping &amp; Free returns. Complimentary samples.`}`,
       },
     },
     {
       type: "meta",
       attributes: {
         name: "twitter:title",
-        content: `${document.c_meta_title?document.c_meta_title:`Byredo Merchants Near Me - Find Byredo Branch Locator Here.`}`,
+        content: `${document.c_metaTitle?document.c_metaTitle:`BYREDO Official Site | Perfumes, Candles &amp; Body Care.`}`,
       },
     },
     {
@@ -216,6 +216,7 @@ const Locator: Template<TemplateRenderProps>= ({
         <AnalyticsScopeProvider name={""}>
         <Header ByredoLogo={_site.c_byradoLogo} ByredoLinks={_site.c_headerMenus}/>
         <HeaderBanner title={_site.c_bannerTitle} description={_site.c_bannerDescription} himage={_site.c_bannerImage.url} />
+        <div>{document.c_metaTitle}</div>
         <SearchHeadlessProvider
           experienceKey={AnswerExperienceConfig.experienceKey}
           locale={AnswerExperienceConfig.locale}
