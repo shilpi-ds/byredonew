@@ -97,7 +97,7 @@ export const getHeadConfig: GetHeadConfig<TemplateRenderProps> = ({
       type: "link",
       attributes: {
         rel: "shortcut icon",
-        href: favicon,
+        href: `${document.c_byradoLogo.url}`,
       },
     },
 
@@ -216,7 +216,7 @@ const Locator: Template<TemplateRenderProps>= ({
         <AnalyticsScopeProvider name={""}>
         <Header ByredoLogo={_site.c_byradoLogo} ByredoLinks={_site.c_headerMenus}/>
         <HeaderBanner title={_site.c_bannerTitle} description={_site.c_bannerDescription} himage={_site.c_bannerImage.url} />
-        <div>{document.c_metaTitle}</div>
+        
         <SearchHeadlessProvider
           experienceKey={AnswerExperienceConfig.experienceKey}
           locale={AnswerExperienceConfig.locale}

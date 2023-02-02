@@ -125,4 +125,13 @@ export const humburgerIcon =`<svg class="humburger-i" viewBox="0 0 24 24" versio
 	</g>
 </svg>`
 
-export const search_icn = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 30.938 30.579"><g id="Icon_feather-search" data-name="Icon feather-search" transform="translate(-3 -3)"><path id="Path_39" data-name="Path 39" d="M24.691,14.6A10.1,10.1,0,1,1,14.6,4.5,10.1,10.1,0,0,1,24.691,14.6Z" transform="translate(0 0)" fill="none" stroke="#111111" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"></path><path id="Path_40" data-name="Path 40" d="M35.066,34.707,24.975,24.975" transform="translate(-3.249 -3.249)" fill="none" stroke="#111111" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"></path></g></svg>`;
+export const search_icn = `<svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_6_429)">
+<path d="M16.1319 14.188H15.1125L14.7512 13.8398C15.5576 12.9034 16.147 11.8005 16.4771 10.61C16.8073 9.41944 16.8701 8.17067 16.661 6.95305C16.0545 3.36783 13.0607 0.504819 9.44761 0.066339C8.17735 -0.0942662 6.88717 0.0376722 5.67579 0.452058C4.46441 0.866444 3.36393 1.55229 2.45857 2.45713C1.5532 3.36196 0.866952 4.46179 0.452323 5.67246C0.0376943 6.88314 -0.0943215 8.17256 0.0663779 9.44207C0.505115 13.0531 3.36981 16.0451 6.95713 16.6512C8.17547 16.8602 9.42497 16.7974 10.6162 16.4675C11.8075 16.1375 12.911 15.5485 13.8479 14.7425L14.1963 15.1036V16.1224L19.6805 21.6034C20.2096 22.1322 21.0741 22.1322 21.6032 21.6034C22.1323 21.0747 22.1323 20.2106 21.6032 19.6819L16.1319 14.188ZM8.38948 14.188C5.17637 14.188 2.58266 11.5958 2.58266 8.38456C2.58266 5.17334 5.17637 2.58115 8.38948 2.58115C11.6026 2.58115 14.1963 5.17334 14.1963 8.38456C14.1963 11.5958 11.6026 14.188 8.38948 14.188Z" fill="white"/>
+</g>
+<defs>
+<clipPath id="clip0_6_429">
+<rect width="22" height="22" fill="white"/>
+</clipPath>
+</defs>
+</svg>`;
