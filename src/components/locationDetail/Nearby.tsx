@@ -3,12 +3,13 @@ import ApiCall from "../../Apis/ApiCall";
 import Address from "../commons/Address";
 import GetDirection from "../commons/GetDirection";
 import OpenClose from "../commons/openClose"
-import timesvg from "../../images/loc3.svg"
-import mapimage from "../../images/loc1.svg";
-import Phonesvg from "../../images/loc2.svg"
+import loc3 from "../../images/loc3.svg"
+import loc1 from "../../images/loc1.svg";
+import loc2 from "../../images/loc2.svg"
 import { Addresssvg, mobilesvg, View_Store } from "../../../sites-global/global";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 import { Link } from "@yext/pages/components";
+import { StaticData } from "../../../sites-global/staticData";
 
 export default function Nearby(props: any) {
   
@@ -67,12 +68,17 @@ export default function Nearby(props: any) {
               <>
                 {/* <SplideSlide key={index}> */}
                   <div className="nearby-card">
-                    <div className="location-name-miles icon-row">
+                 <div className="location-name-miles icon-row">
+                     
                       <h2><Link className="inline-block notHighlight" href={location.data.slug}
                         data-ya-track={`${location.data.name}`}
                         eventName={`${location.data.name}`}
                         rel="noopener noreferrer">{location.data.name}</Link></h2>
-
+                       {typeof location.distance != "undefined" ?
+                <div className="distance">
+                  {metersToMiles(location.distance)} <span>{StaticData.miles}</span>
+                </div>
+                : ''}
                     </div>
                     <div className="icon-row content-col">
                       <Address address={location.data.address} />
