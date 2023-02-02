@@ -200,7 +200,7 @@ export const getHeadConfig: GetHeadConfig<TemplateRenderProps> = ({
         type: "link",
         attributes: {
           rel: "shortcut icon",
-          href: `${document.c_byradoLogo.url}`,
+          href: document._site.c_byradoLogo.image.url?document._site.c_byradoLogo.image.url:favicon,
         },
       },
       {
@@ -214,7 +214,7 @@ export const getHeadConfig: GetHeadConfig<TemplateRenderProps> = ({
         type: "meta",
         attributes: {
           property: "og:image",
-          content: favicon,
+          href: document._site.c_byradoLogo.image.url?document._site.c_byradoLogo.image.url:favicon,
         },
       },
       {

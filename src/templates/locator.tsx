@@ -97,7 +97,7 @@ export const getHeadConfig: GetHeadConfig<TemplateRenderProps> = ({
       type: "link",
       attributes: {
         rel: "shortcut icon",
-        href: `${document.c_byradoLogo.url}`,
+        href: document._site.c_byradoLogo.image.url?document._site.c_byradoLogo.image.url:favicon,
       },
     },
 
@@ -116,21 +116,21 @@ export const getHeadConfig: GetHeadConfig<TemplateRenderProps> = ({
        type: "meta",
        attributes: {
          property: "og:description",
-         content: `${document.c_metaDescription?document.c_metaDescription:`Shop Byredo’s Collection of Perfumes, Candles, Makeup, Leather And Body Care.Free shipping &amp; Free returns. Complimentary samples.`}`,
+         content: `${document._site.c_metaDescription?document._site.c_metaDescription:`Shop Byredo’s Collection of Perfumes, Candles, Makeup, Leather And Body Care.Free shipping &amp; Free returns. Complimentary samples.`}`,
        },
      },
      {
        type: "meta",
        attributes: {
          property: "og:title",
-         content: `${document.c_metaTitle?document.c_metaTitle:`BYREDO Official Site | Perfumes, Candles &amp; Body Care.`}`,
+         content: `${document._site.c_metaTitle?document._site.c_metaTitle:`BYREDO Official Site | Perfumes, Candles &amp; Body Care.`}`,
        },
      },
      {
        type: "meta",
        attributes: {
          property: "og:image",
-         content: favicon,
+         content: document._site.c_byradoLogo.image.url?document._site.c_byradoLogo.image.url:favicon,
        },
      },
      {
@@ -144,14 +144,14 @@ export const getHeadConfig: GetHeadConfig<TemplateRenderProps> = ({
       type: "meta",
       attributes: {
         name: "twitter:description",
-        content:`${document.c_metaDescription?document.c_metaDescription:`Shop Byredo’s Collection of Perfumes, Candles, Makeup, Leather And Body Care.Free shipping &amp; Free returns. Complimentary samples.`}`,
+        content:`${document._site.c_metaDescription?document._site.c_metaDescription:`Shop Byredo’s Collection of Perfumes, Candles, Makeup, Leather And Body Care.Free shipping &amp; Free returns. Complimentary samples.`}`,
       },
     },
     {
       type: "meta",
       attributes: {
         name: "twitter:title",
-        content: `${document.c_metaTitle?document.c_metaTitle:`BYREDO Official Site | Perfumes, Candles &amp; Body Care.`}`,
+        content: `${document._site.c_metaTitle?document._site.c_metaTitle:`BYREDO Official Site | Perfumes, Candles &amp; Body Care.`}`,
       },
     },
     {
