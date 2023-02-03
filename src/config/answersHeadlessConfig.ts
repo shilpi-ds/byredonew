@@ -1,4 +1,3 @@
-
 export const limit = 3;
 export const radius = 1500;
 export const defaultQuery = "";

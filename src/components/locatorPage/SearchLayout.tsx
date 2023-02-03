@@ -71,7 +71,7 @@ const loading = useSearchState(s=>s.searchStatus.isLoading);
           SetNewparam(params1);
           mapzoom = 3;
           searchActions.setUserLocation(params1);
-          searchActions.setVerticalLimit(AnswerExperienceConfig.limit);
+          searchActions.setVerticalLimit(3);
           searchActions.executeVerticalQuery();
         },
         function (error) {
@@ -87,7 +87,7 @@ const loading = useSearchState(s=>s.searchStatus.isLoading);
     SetNewparam(params1);
     // mapzoom=8;
     searchActions.setUserLocation(params1);
-    searchActions.setVerticalLimit(AnswerExperienceConfig.limit);
+    searchActions.setVerticalLimit(3);
     searchActions.executeVerticalQuery();
     setTimeout(() => {
       setIsloading(false);

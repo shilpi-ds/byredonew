@@ -11,7 +11,7 @@ export default function ViewMore(props: viewMoreProps): JSX.Element | null {
   const { className, idName, buttonLabel } = props;  
   const searchAction = useSearchActions();
   const offset = useSearchState(state => state.vertical.offset) || 0;
-  const limit = useSearchState(state => state.vertical.limit) || 10;
+  const limit = useSearchState(state => state.vertical.limit) || 3;
   const numResults = useSearchState(state => state.vertical.resultsCount) || 0;
  
   const executeSearchWithNewOffset = (newOffset: number) => {
