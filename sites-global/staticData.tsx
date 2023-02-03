@@ -2,7 +2,7 @@ export const StaticData = {
     Meta_title:"BYREDO Official Site | Perfumes, Candles &amp; Body Care",
     Meta_description:"Shop Byredo’s Collection of Perfumes, Candles, Makeup, Leather And Body Care.Free shipping &amp; Free returns. Complimentary samples.",
     locator_breadcrumb:"Store Locator",
-    FindLocationtext:"Find a Location",
+    FindLocationtext:"Enter a town or postcode",
     Usemylocation:"Use my location",
     Search:"Search",
     Brandname:"Byredo",

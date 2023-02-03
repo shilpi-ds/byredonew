@@ -71,7 +71,7 @@ const loading = useSearchState(s=>s.searchStatus.isLoading);
           SetNewparam(params1);
           mapzoom = 3;
           searchActions.setUserLocation(params1);
-          searchActions.setVerticalLimit(3);
+          searchActions.setVerticalLimit(AnswerExperienceConfig.limit);
           searchActions.executeVerticalQuery();
         },
         function (error) {
@@ -87,7 +87,7 @@ const loading = useSearchState(s=>s.searchStatus.isLoading);
     SetNewparam(params1);
     // mapzoom=8;
     searchActions.setUserLocation(params1);
-    searchActions.setVerticalLimit(3);
+    searchActions.setVerticalLimit(AnswerExperienceConfig.limit);
     searchActions.executeVerticalQuery();
     setTimeout(() => {
       setIsloading(false);
@@ -244,7 +244,13 @@ const loading = useSearchState(s=>s.searchStatus.isLoading);
         <div className="search-bx">
           <div className="location-with-filter">
             <h1 className="">{StaticData.FindLocationtext}</h1>
+            <button className="useMyLocation" title="Search using your current location!" id="useLocation" onClick={onClick}>
+              <span className="icon" dangerouslySetInnerHTML={{ __html: UseMylocationsvg }} />
+
+             <span className="underline hover:no-underline"> {StaticData.Usemylocation}</span>
+            </button>
           </div>
+         
 
           <div className="search-field">
             <FilterSearch
@@ -304,17 +310,13 @@ const loading = useSearchState(s=>s.searchStatus.isLoading);
                 <span dangerouslySetInnerHTML={{ __html: search_icn }} />
                 </button>
           </div>
-          <FilterAwesome/>
+          
 <div className="fliter-sec">
-          <button className="useMyLocation" title="Search using your current location!" id="useLocation" onClick={onClick}>
-              <span className="icon" dangerouslySetInnerHTML={{ __html: UseMylocationsvg }} />
-
-             <span className="underline hover:no-underline"> {StaticData.Usemylocation}</span>
-            </button>
+         
 
           <ResultsCount
             customCssClasses={{ container: "mx-2 my-0 text-dark-gray" }}
-          />
+          /><FilterAwesome/>
 </div>
         </div>
         <div className="mobile-btns">

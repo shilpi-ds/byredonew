@@ -125,7 +125,7 @@ body.mapView .mobile-btns .btn.mapBtn{  @apply text-Dark-red border-t-0 border-l
 /* left listing */
 .search-bx{@apply  mb-0  z-20 px-4 md:px-0  pt-0 pb-6 text-gray-dark float-left w-full md:w-[30rem] lg:w-[33.6875rem] border-b border-[#d8d8d8] }
 .search-bx button{ @apply float-left mr-0 relative text-white text-xs sm:text-sm }
-.search-bx button.useMyLocation {@apply text-dark-gray flex items-center font-second-main-font text-lg}
+.search-bx button.useMyLocation {@apply flex items-center font-second-main-font text-lg}
 .search-bx button.useMyLocation .icon{@apply mr-1.5}
 .search-field{@apply flex relative  }
 .search-bx .search-btn{@apply absolute top-0 rounded-none right-0  text-white p-2 w-12 h-12 text-center bg-red hover:bg-hover-btn}  
@@ -793,4 +793,36 @@ margin-top: 20px;
 }
 .phone-foot a{
   padding-left: 15px;
+}
+.location-with-filter{
+  margin-bottom: 0.5rem;
+  color: #ffffff;
+  margin-top: 15px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+.search-bx {
+    
+    background-color: #000000;
+}
+.location-with-filter h1{
+  color: #ffffff;
+  font-size: 20px;
+}
+.search-field {
+    
+    padding-left: 15px;
+    padding-right: 30px;
+}
+.fliter-sec{
+  margin-top: 0px;
+  padding-left: 10px;
+}
+.filter-con {
+    
+    color: #fff;
+}
+.ghost-button{
+  display: flex;
+  padding-right: 50px;
 }
