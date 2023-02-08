@@ -20,7 +20,7 @@ export const StaticData = {
     NearStoretext:"NEARBY LOCATIONS",
     AllLocationtext:"View All Location",
     PagenotFound:"404 - Page Not Found",
-    cantfind_page:"We're really sorry, we can't find the page you're looking for",
+    cantfind_page:"Our apologies, we weren’t able to find the page you are looking for",
     Youcouldtry:"You could try",
     Previuspage:"Going back to the previous page",
     homePage:"Going back to the homepage",

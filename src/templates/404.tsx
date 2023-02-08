@@ -11,7 +11,12 @@ import * as React from "react";
 // import { favicon } from "../../sites-global/global";
 import { favicon } from "../../sites-global/global";
 import { StaticData } from "../../sites-global/staticData";
+
+//import Header from "../components/layouts/header";
+import HeaderBanner from "../components/commons/HeaderBanner";
+//import Footer from "../components/layouts/footer";
 import PageLayout from "../components/layouts/PageLayout";
+import "../index.css";
 export const config: TemplateConfig = {
   stream: {
     $id: "404",
@@ -63,7 +68,8 @@ const FourOhFour: Template<TemplateRenderProps> = ({
   } = document;
   return (
     <>
-      <PageLayout global={_site}>
+      <PageLayout gdata={_site}>
+        
         <div className="content-list">
           <div className="container">
             <div className="sec-title text-center">
@@ -81,9 +87,11 @@ const FourOhFour: Template<TemplateRenderProps> = ({
 
           </div>
         </div>
-      </PageLayout>
+       </PageLayout>
     </>
   );
 };
 
 export default FourOhFour;
+
+

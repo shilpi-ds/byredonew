@@ -19,9 +19,7 @@ import Newsletter from "../components/locatorPage/Newsletter";
 import { favicon } from "../../sites-global/global";
 import { JsonLd } from "react-schemaorg";
 import { StaticData } from "../../sites-global/staticData";
-import Header from "../components/layouts/header";
-import Footer from "../components/layouts/footer";
-import HeaderBanner from "../components/commons/HeaderBanner";
+
 import {
   AnalyticsProvider,
   AnalyticsScopeProvider,
@@ -215,8 +213,7 @@ const Locator: Template<TemplateRenderProps>= ({
       >
         {" "}
         <AnalyticsScopeProvider name={""}>
-        <Header ByredoLogo={_site.c_byradoLogo} ByredoLinks={_site.c_headerMenus}/>
-        <HeaderBanner title={_site.c_bannerTitle} description={_site.c_bannerDescription} himage={_site.c_bannerImage.url} />
+        <PageLayout gdata={_site}>
         
         <SearchHeadlessProvider
           experienceKey={AnswerExperienceConfig.experienceKey}
@@ -233,8 +230,7 @@ const Locator: Template<TemplateRenderProps>= ({
         </SearchHeadlessProvider>
       
    
-        <Footer ByredoHelp={_site.c_footerHelpSection} ByredoServices={_site.c_servicesFooter} ByredoLocator={_site.c_footerStoreLocator} customercare={_site.c_customerCare} footemail={_site.c_emailAddress} footphone={_site.mainPhone}/>
-  
+       </PageLayout>
       </AnalyticsScopeProvider>
       </AnalyticsProvider>
     </>

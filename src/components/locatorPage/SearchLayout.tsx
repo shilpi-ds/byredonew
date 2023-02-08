@@ -24,7 +24,7 @@ import VerticalResults from "../VerticalResults";
 import ResultsCount from "./ResultsCount";
 import useFetchResults from "../../hooks/useFetchResults";
 import { Link } from "@mui/material";
-import { AnswerExperienceConfig } from "../../config/answersHeadlessConfig";
+import { AnswerExperienceConfig ,limit} from "../../config/answersHeadlessConfig";
 import FilterAwesome from "./FilterAwesome";
 
 var params1: any = { latitude: center_latitude, longitude:center_longitude }
@@ -71,7 +71,7 @@ const loading = useSearchState(s=>s.searchStatus.isLoading);
           SetNewparam(params1);
           mapzoom = 3;
           searchActions.setUserLocation(params1);
-          searchActions.setVerticalLimit(AnswerExperienceConfig.limit);
+          searchActions.setVerticalLimit(limit);
           searchActions.executeVerticalQuery();
         },
         function (error) {
@@ -81,13 +81,13 @@ const loading = useSearchState(s=>s.searchStatus.isLoading);
       );
     }
     params1 = {
-      latitude: 54.9191,
-      longitude: -1.3692,
+      latitude: 28.9811,
+      longitude: 77.7106,
     };
     SetNewparam(params1);
     // mapzoom=8;
     searchActions.setUserLocation(params1);
-    searchActions.setVerticalLimit(AnswerExperienceConfig.limit);
+    searchActions.setVerticalLimit(limit);
     searchActions.executeVerticalQuery();
     setTimeout(() => {
       setIsloading(false);

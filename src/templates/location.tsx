@@ -26,7 +26,6 @@ import {
 import PageLayout from "../components/layouts/PageLayout";
 import { fetch } from "@yext/pages/util";
 import Nav from "../components/layouts/Nav";
-import Footer from "../components/layouts/footer";
 import Menu from "../components/locationDetail/Menu";
 import PhotoSlider from "../components/locationDetail/PhotoSlider";
 //import PhotoGallery from "../components/locationDetail/PhotoGallery";
@@ -38,8 +37,7 @@ import StoreHighlight from "../components/locationDetail/SoreHighlight";
 import OpenClose from "../components/commons/openClose";
 import Faq from "../components/locationDetail/Faqs";
 import { StaticData } from "../../sites-global/staticData";
-import Header from "../components/layouts/header";
-import HeaderBanner from "../components/commons/HeaderBanner";
+import loc3 from "../images/loc3.svg";
 import Accordion from "../components/commons/Accordion";
 //import PhotoSlider from "../components/locationDetails/PhotoSlider";
 import {apikey_for_entity, baseuRL,stagingBaseurl,AnalyticsEnableDebugging,AnalyticsEnableTrackingCookie } from "../../sites-global/global";
@@ -88,6 +86,7 @@ export const config: TemplateConfig = {
     "c_servicesFooter",
     "c_footerStoreLocator",
    "photoGallery",
+   "c_faqsTitle"
     ],
     // Defines the scope of entities that qualify for this stream.
     filter: {
@@ -257,7 +256,7 @@ export const transformProps: TransformProps<ExternalApiData> = async (
   var location = `${data.document.yextDisplayCoordinate ? data.document.yextDisplayCoordinate.latitude : data.document.displayCoordinate.latitude},${data.document.yextDisplayCoordinate ? data.document.yextDisplayCoordinate.longitude : data.document.displayCoordinate.longitude}`;
 
     const url = `${AnswerExperienceConfig.endpoints.verticalSearch}?experienceKey=${AnswerExperienceConfig.experienceKey}&api_key=${AnswerExperienceConfig.apiKey}&v=20220511&version=${AnswerExperienceConfig.experienceVersion}&locale=${AnswerExperienceConfig.locale}&location=${location}&locationRadius=${AnswerExperienceConfig.locationRadius}&verticalKey=${AnswerExperienceConfig.verticalKey}&limit=4&retrieveFacets=true&skipSpellCheck=false&sessionTrackingEnabled=true&source=STANDARD`;
- console.log(url)
+ //console.log(url)
   const externalApiData = (await fetch(url).then((res: any) =>
     res.json()
 
@@ -305,6 +304,7 @@ const Location: Template<ExternalApiRenderData> = ({
     c_relatedFaqs,
     c_title,
     c_image,
+    c_faqsTitle
   } = document;
 
  let templateData = { document: document, __meta: __meta };
@@ -432,8 +432,7 @@ breadcrumbScheme.push({
   return (
 
     <>
- <Header ByredoLogo={_site.c_byradoLogo} ByredoLinks={_site.c_headerMenus}/>
-        <HeaderBanner title={_site.c_bannerTitle} description={_site.c_bannerDescription} himage={_site.c_bannerImage.url} />
+<PageLayout gdata={_site}>
       <JsonLd<Store>
         item={{
           "@context": "https://schema.org",
@@ -472,7 +471,7 @@ breadcrumbScheme.push({
       >
         {" "}
         <AnalyticsScopeProvider name={""}>
-      <PageLayout global={_site}>
+   
 
 
       <div className="container">
@@ -484,6 +483,7 @@ breadcrumbScheme.push({
             </div>
           </div>
           <div className="location-information">
+         
         <Contact address={address} name={name}
            phone={mainPhone} latitude={yextDisplayCoordinate ? yextDisplayCoordinate.latitude : displayCoordinate?.latitude}
            yextDisplayCoordinate={yextDisplayCoordinate} longitude={yextDisplayCoordinate ? yextDisplayCoordinate.longitude : displayCoordinate?.longitude} hours={hours}  additionalHoursText={additionalHoursText} ></Contact>
@@ -509,11 +509,16 @@ breadcrumbScheme.push({
               <h2>Featured Products</h2>
               <div className="photo-slider">{photoGallery && <PhotoSlider photoGallery={photoGallery}/> }</div>
       </div>
+      {c_relatedFaqs ?
+      <>
       <div className="faq-content">
-        <div className="faq-title">How can we help ?</div>
+        <div className="faq-title">{c_faqsTitle}</div>
         <div className="faqs"><section className="faq-container">{c_relatedFaqs && <Accordion content={c_relatedFaqs}/> }</section></div>
         </div>
-        
+        </>
+         : ''}
+        {yextDisplayCoordinate || cityCoordinate || displayCoordinate ?
+        <>
         <div className="nearby-sec">
           <div className="container">
             <div className="sec-title"><h2 className="">{StaticData.NearStoretext}</h2></div>
@@ -525,14 +530,15 @@ breadcrumbScheme.push({
           </div>
           
         </div>
+        </>
+        : ''}
 
-      </PageLayout>
+    
       </AnalyticsScopeProvider>
       </AnalyticsProvider>
      
-      
-      <Footer ByredoHelp={_site.c_footerHelpSection} ByredoServices={_site.c_servicesFooter} ByredoLocator={_site.c_footerStoreLocator} customercare={_site.c_customerCare} footemail={_site.c_emailAddress} footphone={_site.mainPhone}/>
-    </>
+      </PageLayout>
+   </>
   );
 };
 

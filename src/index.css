@@ -826,3 +826,43 @@ margin-top: 20px;
   display: flex;
   padding-right: 50px;
 }
+.locator-main .result.active {
+    
+    padding-left: 20px;
+}
+.locator-main .result {
+    padding-left: 20px;
+    margin-top: 20px;
+    padding-bottom: 20px;
+}
+.icon-add{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.icon-add h2{
+  padding-left: 10px;
+  
+}
+.icon-name {
+  display: flex;
+  
+}
+.address .notHighlight {
+  padding-left: 30px;
+}
+.loc-phone{
+  display: flex;
+  margin-top: 15px;
+}
+.loc-phone h4{
+  padding-left: 10px;
+}
+.mt-2 {
+    
+    display: flex;
+}
+.closeing-div .notHighlight{
+  padding-left: 10px;
+}

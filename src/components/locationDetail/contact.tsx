@@ -25,6 +25,7 @@ const Contact = (props: any) => {
     c_storeInfoHeading,
     c_getDirectionsCTAText
   } = props;
+  
   return (
     <>
       <div className="address-main-sec">
@@ -85,6 +86,7 @@ const Contact = (props: any) => {
             <div className="hours-div mb-5 md:mb-1 flex flex-col">
               {hours.holidayHours && typeof hours.reopenDate == "undefined" ? (
                 <>
+               
                   <Model
                     name={StaticData.Holdiay}
                     holidayHours={hours.holidayHours}

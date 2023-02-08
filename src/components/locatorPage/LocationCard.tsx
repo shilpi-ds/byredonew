@@ -56,88 +56,75 @@ function opentime(e: any) {
 //  }
   
   return (
-    <div className={`location result-list-inner-${result.id} result`} id={`result-${result.id}`} key={`result-${result.rawData.id}`}>
-      <div className="result-inner ">
-        <div className="center-column">
-          <div className="lp-param-results lp-subparam-hours">
-            <div className="location-name-miles icon-row">
-              <div className="icon text-black relative"> <img className=" " src={loc1} width="50" height="50"
-                alt={''} /></div>
-              <h2><Link className="inline-block notHighlight"
-               data-ya-track={`viewDetail -${result.rawData.name}`}
-               eventName={`viewDetail -${result.rawData.name}`}
-               rel="noopener noreferrer"
-               href={result.rawData.slug}>{result.rawData.name}
-              </Link></h2>
-              {typeof result.distance != "undefined" ?
-                <div className="distance">
-                  {metersToMiles(result.distance)} <span>{StaticData.miles}</span>
-                </div>
-                : ''}
-            </div>
-           
-            
-            <div className="icon-row content-col address-with-availablity notHighlight">
-              <Address address={address} />
-              <div className="loc-phone">
-              <div className="icon-time"> <img className=" " src={loc2} width="20" height="20"
-                alt={''} /></div>
-                <h4><a href={`tel:${result.rawData.mainPhone}`}>{result.rawData.mainPhone}</a></h4></div>
-              {result.rawData.hours ? <>
-              <div className="mt-2">
-              {/* <h6>Opening Hours</h6> */}
-                {result.rawData.hours?.reopenDate ? <>
-                  {/* <div className="icon"> <img className=" " src={loc3} width="20" height="20" alt="" /> </div> */}
-                  <div className="icon-time"> <img className=" " src={loc3} width="20" height="20"
-                alt={''} /></div>
-                  <div className=" flex open-now-string items-center " data-id={`main-shop-${result.rawData.id}`} onClick={opentime}>
-                    {StaticData.tempClosed}
-                  </div>
-                </>
-                  : <> 
-                   <div className="icon-time"> <img className=" " src={loc3} width="20" height="20"
-                alt={''} /></div>
-                    <div className=" flex open-now-string items-center" data-id={`main-shop-${result.rawData.id}`} >
-                      <OpenClose timezone={result.rawData.timezone} hours={result.rawData.hours} deliveryHours={result.rawData.hours}></OpenClose>
-                    </div></>}
-
-
-                {/* <div className={`storelocation-openCloseTime  capitalize hidden`}>
-                    {hoursopen?
-                   typeof result.rawData.hours === "undefined" ? ("") :
-                     <Hours key={result.rawData.name} additionalHoursText={result.rawData.additionalHoursText} hours={result.rawData.hours} c_specific_day={result.rawData.c_specific_day} />
-                   :''}
-                </div> */}
-              </div></> : <div className="closeddot notHighlight red-dot">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 8 8">
-           <circle id="Ellipse_5" data-name="Ellipse 5" cx="4" cy="4" r="4" fill="#ad1e1f"/>
-         </svg>
-                   <div className="hours-info text-lg font-second-main-font closeddot"> 
-                   Closed
-                   </div>
-                   </div>}
-
-            </div>
-         
-             <div className="button-bx">
-              <Link type="button" href={result.rawData.slug} className=" btn notHighlight "
-              data-ya-track={`viewStore -${result.rawData.name}`}
-              eventName={`viewStore -${result.rawData.name}`}
-              rel="noopener noreferrer"
-              >
-                {/* <div dangerouslySetInnerHTML={{__html: View_Store}}/> */}
-                {StaticData.StoreDetailbtn}
-              </Link>
-              {result.rawData.displayCoordinate ?
-                <GetDirection buttonText={StaticData.getDirection} address={address} latitude={result.rawData.displayCoordinate?.latitude} longitude={result.rawData.displayCoordinate?.longitude} />
-                : <GetDirection buttonText={StaticData.getDirection} address={address} latitude={result.rawData.yextDisplayCoordinate?.latitude} longitude={result.rawData.yextDisplayCoordinate?.longitude} />}
-            </div>
-          
-         
-
+    <div className={`location result`} id={`result-${result.index}`}>
+     
+    <div className="relative w-full">
+      <div className="icon-add"> <div className="icon-name"><img className=" " src={loc1} width="20" height="20"
+          alt={''} />
+        <h2><Link className="inline-block notHighlight"
+         data-ya-track={`viewDetail -${result.rawData.name}`}
+         eventName={`viewDetail -${result.rawData.name}`}
+         rel="noopener noreferrer"
+         href={result.rawData.slug}>{result.rawData.name}
+        </Link></h2></div>  {typeof result.distance != "undefined" ?
+          <div className="distance">
+            {metersToMiles(result.distance)} <span>{StaticData.miles}</span>
           </div>
+          : ''}</div>
+      
+          <Address address={address} />
+          <div className="loc-phone">
+        <div className="icon-time"> <img className=" " src={loc2} width="20" height="20"
+          alt={''} /></div>
+          <h4><a href={`tel:${result.rawData.mainPhone}`}>{result.rawData.mainPhone}</a></h4></div>
+              {result.rawData.hours ? <>
+        <div className="mt-2">
+        {/* <h6>Opening Hours</h6> */}
+          {result.rawData.hours?.reopenDate ? <>
+            {/* <div className="icon"> <img className=" " src={loc3} width="20" height="20" alt="" /> </div> */}
+            <div className="icon-time"> <img className=" " src={loc3} width="20" height="20"
+          alt={''} /></div>
+            <div className=" flex open-now-string items-center " data-id={`main-shop-${result.rawData.id}`} onClick={opentime}>
+              {StaticData.tempClosed}
+            </div>
+          </>
+            : <> 
+             <div className="icon-time"> <img className=" " src={loc3} width="20" height="20"
+          alt={''} /></div>
+              <div className=" flex open-now-string items-center" data-id={`main-shop-${result.rawData.id}`} >
+                <OpenClose timezone={result.rawData.timezone} hours={result.rawData.hours} deliveryHours={result.rawData.hours}></OpenClose>
+              </div></>}
 
-        </div>
+
+          {/* <div className={`storelocation-openCloseTime  capitalize hidden`}>
+              {hoursopen?
+             typeof result.rawData.hours === "undefined" ? ("") :
+               <Hours key={result.rawData.name} additionalHoursText={result.rawData.additionalHoursText} hours={result.rawData.hours} c_specific_day={result.rawData.c_specific_day} />
+             :''}
+          </div> */}
+        </div></> : <div className="closeddot notHighlight red-dot">
+              <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 8 8">
+     <circle id="Ellipse_5" data-name="Ellipse 5" cx="4" cy="4" r="4" fill="#ad1e1f"/>
+   </svg>
+             <div className="hours-info text-lg font-second-main-font closeddot"> 
+             Closed
+             </div>
+             </div>}
+
+      
+                <div className="button-bx">
+        <Link type="button" href={result.rawData.slug} className=" btn notHighlight "
+        data-ya-track={`viewStore -${result.rawData.name}`}
+        eventName={`viewStore -${result.rawData.name}`}
+        rel="noopener noreferrer"
+        >
+          {/* <div dangerouslySetInnerHTML={{__html: View_Store}}/> */}
+          {StaticData.StoreDetailbtn}
+        </Link>
+        {result.rawData.displayCoordinate ?
+          <GetDirection buttonText={StaticData.getDirection} address={address} latitude={result.rawData.displayCoordinate?.latitude} longitude={result.rawData.displayCoordinate?.longitude} />
+          : <GetDirection buttonText={StaticData.getDirection} address={address} latitude={result.rawData.yextDisplayCoordinate?.latitude} longitude={result.rawData.yextDisplayCoordinate?.longitude} />}
+      </div>
       </div>
     </div>
 
