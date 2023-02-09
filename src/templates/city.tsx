@@ -242,11 +242,11 @@ const City: Template<TemplateRenderProps> = ({
   });
 
   let slugString = "";
-  document.dm_directoryParents.forEach((e: any) => {
+  document?.dm_directoryParents?.forEach((e: any) => {
     slugString += e.slug + "/";
   });
 
-  const childrenDivs = dm_directoryChildren.map((entity: any) => {
+  const childrenDivs = dm_directoryChildren?.map((entity: any) => {
     console.log(entity)
     var origin: any = null;
     if (entity.address.city) {
