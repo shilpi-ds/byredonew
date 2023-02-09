@@ -64,8 +64,14 @@ export const config: TemplateConfig = {
 
 export const getPath: GetPath<TemplateProps> = ({ document }) => {
   var url: any = ""
-        url = `${url}/${document.slug}.html`
-   
+  document.dm_directoryParents.map((i: any) => {
+    if (i.meta.entityType.id == 'ce_country') {
+      url = `${i.slug}`
+    }
+    else if (i.meta.entityType.id == 'ce_region') {
+      url = `${url}/${i.slug}/${document.slug}.html`
+    }
+  })
   return url;
 };
 
@@ -261,7 +267,7 @@ const City: Template<TemplateRenderProps> = ({
     if (!entity.slug) {
       url = `/${entity.id}-${result}.html`;
     } else {
-      url = `/${entity.slug}`;
+      url = `/${entity.slug.toString()}`;
     }
 
 
@@ -316,12 +322,12 @@ const City: Template<TemplateRenderProps> = ({
           >
 
             {StaticData.StoreDetailbtn}</Link>
-         </div>
+          <GetDirection buttonText={StaticData.getDirection} address={entity.address} latitude={entity.yextDisplayCoordinate.latitude} longitude={entity.yextDisplayCoordinate.longitude} />
+        </div>
       </div>
   );
   });
-
-
+ 
 
   var url: any = ""
 
@@ -330,7 +336,7 @@ const City: Template<TemplateRenderProps> = ({
       url = `${i.slug}`
     }
     else if (i.meta.entityType.id == 'ce_region') {
-      url = `${url}/${i.slug}/${document.slug}.html`
+      url = `${url}/${i.slug}/${document.slug.toString()}.html`
     }
   })
   let breadcrumbScheme: any = [];
@@ -354,7 +360,7 @@ const City: Template<TemplateRenderProps> = ({
     "@type": "ListItem",
     position: currentIndex + 1,
     item: {
-      "@id": `${constant.stagingBaseurl}/${document.slug}.html`,
+      "@id": `${constant.stagingBaseurl}/${document.slug.toString()}.html`,
       name: document.name,
     },
   });
