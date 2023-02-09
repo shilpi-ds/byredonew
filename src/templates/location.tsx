@@ -37,7 +37,7 @@ import StoreHighlight from "../components/locationDetail/SoreHighlight";
 import OpenClose from "../components/commons/openClose";
 import Faq from "../components/locationDetail/Faqs";
 import { StaticData } from "../../sites-global/staticData";
-import loc3 from "../images/loc3.svg";
+
 import Accordion from "../components/commons/Accordion";
 //import PhotoSlider from "../components/locationDetails/PhotoSlider";
 import {apikey_for_entity, baseuRL,stagingBaseurl,AnalyticsEnableDebugging,AnalyticsEnableTrackingCookie } from "../../sites-global/global";
@@ -86,7 +86,6 @@ export const config: TemplateConfig = {
     "c_servicesFooter",
     "c_footerStoreLocator",
    "photoGallery",
-   "c_faqsTitle"
     ],
     // Defines the scope of entities that qualify for this stream.
     filter: {
@@ -304,7 +303,6 @@ const Location: Template<ExternalApiRenderData> = ({
     c_relatedFaqs,
     c_title,
     c_image,
-    c_faqsTitle
   } = document;
 
  let templateData = { document: document, __meta: __meta };
@@ -483,7 +481,6 @@ breadcrumbScheme.push({
             </div>
           </div>
           <div className="location-information">
-         
         <Contact address={address} name={name}
            phone={mainPhone} latitude={yextDisplayCoordinate ? yextDisplayCoordinate.latitude : displayCoordinate?.latitude}
            yextDisplayCoordinate={yextDisplayCoordinate} longitude={yextDisplayCoordinate ? yextDisplayCoordinate.longitude : displayCoordinate?.longitude} hours={hours}  additionalHoursText={additionalHoursText} ></Contact>
@@ -509,16 +506,11 @@ breadcrumbScheme.push({
               <h2>Featured Products</h2>
               <div className="photo-slider">{photoGallery && <PhotoSlider photoGallery={photoGallery}/> }</div>
       </div>
-      {c_relatedFaqs ?
-      <>
       <div className="faq-content">
-        <div className="faq-title">{c_faqsTitle}</div>
+        <div className="faq-title">How can we help ?</div>
         <div className="faqs"><section className="faq-container">{c_relatedFaqs && <Accordion content={c_relatedFaqs}/> }</section></div>
         </div>
-        </>
-         : ''}
-        {yextDisplayCoordinate || cityCoordinate || displayCoordinate ?
-        <>
+        
         <div className="nearby-sec">
           <div className="container">
             <div className="sec-title"><h2 className="">{StaticData.NearStoretext}</h2></div>
@@ -530,8 +522,6 @@ breadcrumbScheme.push({
           </div>
           
         </div>
-        </>
-        : ''}
 
     
       </AnalyticsScopeProvider>
