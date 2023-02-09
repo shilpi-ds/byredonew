@@ -267,7 +267,7 @@ const City: Template<TemplateRenderProps> = ({
     if (!entity.slug) {
       url = `/${entity.id}-${result}.html`;
     } else {
-      url = `/${entity.slug.toString()}`;
+      url = `/${entity.slug}`;
     }
 
 
@@ -322,69 +322,11 @@ const City: Template<TemplateRenderProps> = ({
           >
 
             {StaticData.StoreDetailbtn}</Link>
-          <GetDirection buttonText={StaticData.getDirection} address={entity.address} latitude={entity.yextDisplayCoordinate.latitude} longitude={entity.yextDisplayCoordinate.longitude} />
-        </div>
+         </div>
       </div>
   );
   });
-  function getDirectionUrl(entitiy: any) {
-    var origin: any = null;
-    if (entitiy.address.city) {
-      origin = entitiy.address.city;
-    } else if (entitiy.address.region) {
-      origin = entitiy.address.region;
-    } else {
-      origin = entitiy.address.country;
-    }
-    if (navigator.geoentity) {
-      const error = (error: any) => {
-        var message_string =
-          "Unable to determine your entity. please share your entity";
-        // if (confirm(message_string) != true) {
-        //   var getDirectionUrl =
-        //     "https://www.google.com/maps/dir/?api=1&destination=" +
-        //     entitiy.yextDisplayCoordinate.latitude +
-        //     "," +
-        //     entitiy.yextDisplayCoordinate.longitude +
-        //     "&origin=" +
-        //     origin;
 
-        //   window.open(getDirectionUrl, "_blank");
-        // } else {
-        //   return false;
-        // }
-        var getDirectionUrl =
-          "https://www.google.com/maps/dir/?api=1&destination=" +
-          entitiy.yextDisplayCoordinate.latitude +
-          "," +
-          entitiy.yextDisplayCoordinate.longitude +
-          "&origin=" +
-          origin;
-
-        window.open(getDirectionUrl, "_blank");
-      };
-      navigator.geoentity.getCurrentPosition(
-        function (position: any) {
-          let currentLatitude = position.coords.latitude;
-          let currentLongitude = position.coords.longitude;
-          let getDirectionUrl =
-            "https://www.google.com/maps/dir/?api=1&destination=" +
-            entitiy.yextDisplayCoordinate.latitude +
-            "," +
-            entitiy.yextDisplayCoordinate.longitude +
-            "&origin=" +
-            currentLatitude +
-            "," +
-            currentLongitude;
-          window.open(getDirectionUrl, "_blank");
-        },
-        error,
-        {
-          timeout: 10000,
-        }
-      );
-    }
-  }
 
 
   var url: any = ""
