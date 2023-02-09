@@ -64,14 +64,8 @@ export const config: TemplateConfig = {
 
 export const getPath: GetPath<TemplateProps> = ({ document }) => {
   var url: any = ""
-  document.dm_directoryParents.map((i: any) => {
-    if (i.meta.entityType.id == 'ce_country') {
-      url = `${i.slug}`
-    }
-    else if (i.meta.entityType.id == 'ce_region') {
-      url = `${url}/${i.slug}/${document.slug}.html`
-    }
-  })
+        url = `${url}/${document.slug}.html`
+   
   return url;
 };
 
@@ -360,7 +354,7 @@ const City: Template<TemplateRenderProps> = ({
     "@type": "ListItem",
     position: currentIndex + 1,
     item: {
-      "@id": `${constant.stagingBaseurl}/${document.slug.toString()}.html`,
+      "@id": `${constant.stagingBaseurl}/${document.slug}.html`,
       name: document.name,
     },
   });
