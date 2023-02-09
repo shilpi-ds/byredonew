@@ -41,7 +41,7 @@ export const config: TemplateConfig = {
       "meta",
       "name",
       "slug",
-      "dm_directoryParents",
+      
       "dm_directoryParents.name",
       "dm_directoryParents.slug",
       "dm_directoryParents.meta.entityType",
@@ -64,17 +64,19 @@ export const config: TemplateConfig = {
 };
 
 export const getPath: GetPath<TemplateProps> = ({ document }) => {
-  var url: any = ""
+  var url= "";
   document.dm_directoryParents.map((i: any) => {
     if (i.meta.entityType.id == 'ce_country') {
-      url = `${i.slug}`
+      url += i.slug + "/";
     }
     else if (i.meta.entityType.id == 'ce_region') {
-      url = `${url}/${i.slug}/${document.slug}.html`
+      url = `${url}/${i.slug}/${document.slug}`
     }
   })
-  return url;
+  return url+ '.html';
 };
+
+
 
 export const getHeadConfig: GetHeadConfig<TemplateRenderProps> = ({
   relativePrefixToRoot,
