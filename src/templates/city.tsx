@@ -69,7 +69,7 @@ export const getPath: GetPath<TemplateProps> = ({ document }) => {
       url = `${i.slug}`
     }
     else if (i.meta.entityType.id == 'ce_region') {
-      url = `${url}/${i.slug}/${document.slug.toString()}.html`
+      url = `${url}/${i.slug}/${document.slug}.html`
     }
   })
   return url;
@@ -385,18 +385,7 @@ const City: Template<TemplateRenderProps> = ({
       );
     }
   }
-  c_globalData &&
-    c_globalData.map((i: any) => {
-      address = i.address ? i.address : [];
-      c_companyrn = i.c_companyrn ? i.c_companyrn : "";
-      c_footerLinks = i.c_footerLinks ? i.c_footerLinks : [];
-      c_headerLinks1 = i.c_headerLinks1 ? i.c_headerLinks1 : [];
-      c_phoneNumber = i.phoneNumber ? i.phoneNumber : "";
-      facebookPageUrl = i.facebookPageUrl ? i.facebookPageUrl : "";
-      instagramHandle = i.instagramHandle ? i.instagramHandle : "";
-      twitterHandle = i.twitterHandle ? i.twitterHandle : "";
-      c_tikTok = i.c_tikTok ? i.c_tikTok : "";
-    });
+
 
   var url: any = ""
 
@@ -405,7 +394,7 @@ const City: Template<TemplateRenderProps> = ({
       url = `${i.slug}`
     }
     else if (i.meta.entityType.id == 'ce_region') {
-      url = `${url}/${i.slug}/${document.slug.toString()}.html`
+      url = `${url}/${i.slug}/${document.slug}.html`
     }
   })
   let breadcrumbScheme: any = [];
