@@ -213,46 +213,9 @@ const country: Template<TemplateRenderProps> = ({
 
 console.log(entity.dm_directoryChildrenCount);
     if (typeof entity.dm_directoryChildren != "undefined") {
-      if (entity.dm_directoryChildrenCount == 1) {
-        entity.dm_directoryChildren.map((res: any) => {
-
-          let detlslug1 = "";
-
-          if (!res.slug) {
-            let slugString = res.id + " " + res.name;
-            let slug = slugString;
-            detlslug1 = `${slug}.html`;
-          } else {
-            detlslug1 = `/${res.slug.toString()}.html`;
-          }
-          //  if (res.meta.entityType.name == 'ce_city') {
-          //    detlslug1 = "gb/" + detlslug1;
-          //  } else {
-          //    detlslug1 = detlslug1;
-          //  }
-
-          // console.log(entity.name, res);
-
-          res.dm_directoryChildren ? res.dm_directoryChildren.map((detl: any) => {
-
-            if (!detl.slug) {
-              let slugString = detl.id + " " + detl.name;
-              let slug =slugString;
-              detlslug1 = `${slug}.html`;
-            } else {
-              detlslug1 = `${detl.slug.toString()}.html`;
-            }
-
-            detlslug = detlslug1;
-
-          }) : detlslug = detlslug1;
-
-
-        })
-      }
-      else {
+      
         detlslug = slug + "/" + entity.slug + ".html";
-      }
+     
     }
 
     return (

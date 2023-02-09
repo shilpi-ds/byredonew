@@ -233,25 +233,9 @@ const region: Template<TemplateRenderProps> = ({
 
     if (typeof entity.dm_directoryChildren != "undefined") {
 
-      if (entity.dm_directoryChildrenCount == 1) {
-        entity.dm_directoryChildren.map((res: any) => {
-         console.log(res,"res")
-          let detlslug1 = "";
-
-          if (!res.slug) {
-            let slugString = res.id + "-" + res.name.toLowerCase();
-            let slug = slugString;
-            detlslug1 = `${slug}.html`;
-          } else {
-            detlslug1 = `/${res.slug.toString()}.html`;
-          }
-
-          detlslug = detlslug1;
-
-        })
-      } else {
-        detlslug = "uk/" + slug + "/" + entity.slug + ".html";
-      }
+      
+        detlslug = slug + "/" + entity.slug + ".html";
+     
 
     }
 
