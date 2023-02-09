@@ -334,7 +334,7 @@ const City: Template<TemplateRenderProps> = ({
 
   var url: any = ""
 
-  document.dm_directoryParents.map((i: any) => {
+  document.dm_directoryParents?.map((i: any) => {
     if (i.meta.entityType.id == 'ce_country') {
       url = `${i.slug}`
     }
@@ -345,7 +345,7 @@ const City: Template<TemplateRenderProps> = ({
   let breadcrumbScheme: any = [];
   let currentIndex: any = 0;
   dm_directoryParents &&
-    dm_directoryParents.map((i: any, index: any) => {
+    dm_directoryParents?.map((i: any, index: any) => {
       currentIndex = index;
       if (index != 0) {
         breadcrumbScheme.push({
