@@ -65,7 +65,7 @@ export const config: TemplateConfig = {
 
 export const getPath: GetPath<TemplateProps> = ({ document }) => {
   var url= "";
-  document.dm_directoryParents.map((i: any) => {
+  document?.dm_directoryParents?.map((i: any) => {
     if (i.meta.entityType.id == 'ce_country') {
       url += i.slug + "/";
     }
@@ -84,7 +84,7 @@ export const getHeadConfig: GetHeadConfig<TemplateRenderProps> = ({
   document,
 }): HeadConfig => {
   var canonical="";
-   document.dm_directoryChildren.map((entity: any) => {
+   document?.dm_directoryChildren?.map((entity: any) => {
       canonical=  entity.address.countryCode.toLowerCase().replaceAll(" ", "-") + '/' +  entity.address.region.toLowerCase().replaceAll(" ", "-");
           })
 
