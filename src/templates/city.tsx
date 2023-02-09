@@ -41,6 +41,7 @@ export const config: TemplateConfig = {
       "meta",
       "name",
       "slug",
+      "dm_directoryParents",
       "dm_directoryParents.name",
       "dm_directoryParents.slug",
       "dm_directoryParents.meta.entityType",
