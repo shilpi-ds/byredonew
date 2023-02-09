@@ -64,7 +64,7 @@ export const config: TemplateConfig = {
 
 export const getPath: GetPath<TemplateProps> = ({ document }) => {
   //currentUrl = document.slug.toString() + ".html";
-  return document.slug.toString() + ".html";
+  return document.meta.locale + "/" + document.slug + ".html";
 };
 
 export const getHeadConfig: GetHeadConfig<TemplateRenderProps> = ({
