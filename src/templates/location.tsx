@@ -480,21 +480,7 @@ breadcrumbScheme.push({
                 </div> 
             </div>
           </div>
-          <div className="location-information">
-        <Contact address={address} name={name}
-           phone={mainPhone} latitude={yextDisplayCoordinate ? yextDisplayCoordinate.latitude : displayCoordinate?.latitude}
-           yextDisplayCoordinate={yextDisplayCoordinate} longitude={yextDisplayCoordinate ? yextDisplayCoordinate.longitude : displayCoordinate?.longitude} hours={hours}  additionalHoursText={additionalHoursText} ></Contact>
-           {/* <div className="work-hours"><OpenClose timezone={timezone} hours={hours} /></div> */}
-          {
-            hours ?
-              <div className="map-sec" id="map_canvas">
-                <CustomMap prop={yextDisplayCoordinate ? yextDisplayCoordinate : displayCoordinate} />
-              </div> :
-              <div className="map-sec without-hours" id="map_canvas">
-                <CustomMap prop={yextDisplayCoordinate ? yextDisplayCoordinate : displayCoordinate} />
-              </div>
-          }
-        </div>
+          
         <div className="about-content">
                 <div className="about-image"><img src={c_image.url} height={500} width={500}/></div>
                 <div className="about-data">
