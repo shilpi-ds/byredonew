@@ -19,7 +19,10 @@ import Newsletter from "../components/locatorPage/Newsletter";
 import { favicon } from "../../sites-global/global";
 import { JsonLd } from "react-schemaorg";
 import { StaticData } from "../../sites-global/staticData";
-
+import Header from "../components/layouts/header";
+import Footer from "../components/layouts/footer";
+import HeaderBanner from "../components/commons/HeaderBanner";
+import FilterAwesome from "../components/locatorPage/FilterAwesome";
 import {
   AnalyticsProvider,
   AnalyticsScopeProvider,
@@ -57,7 +60,7 @@ export const config: TemplateConfig = {
 };
 
 export const getPath: GetPath<TemplateProps> = () => {
-  return `/index.html`;
+  return `/locator.html`;
 };
 export const getHeadConfig: GetHeadConfig<TemplateRenderProps> = ({
   relativePrefixToRoot,
@@ -213,7 +216,8 @@ const Locator: Template<TemplateRenderProps>= ({
       >
         {" "}
         <AnalyticsScopeProvider name={""}>
-        <PageLayout gdata={_site}>
+        <Header ByredoLogo={_site.c_byradoLogo} ByredoLinks={_site.c_headerMenus}/>
+        <HeaderBanner title={_site.c_bannerTitle} description={_site.c_bannerDescription} himage={_site.c_bannerImage.url} />
         
         <SearchHeadlessProvider
           experienceKey={AnswerExperienceConfig.experienceKey}
@@ -230,7 +234,8 @@ const Locator: Template<TemplateRenderProps>= ({
         </SearchHeadlessProvider>
       
    
-       </PageLayout>
+        <Footer ByredoHelp={_site.c_footerHelpSection} ByredoServices={_site.c_servicesFooter} ByredoLocator={_site.c_footerStoreLocator} customercare={_site.c_customerCare} footemail={_site.c_emailAddress} footphone={_site.mainPhone}/>
+  
       </AnalyticsScopeProvider>
       </AnalyticsProvider>
     </>

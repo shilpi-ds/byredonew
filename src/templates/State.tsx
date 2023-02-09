@@ -243,14 +243,14 @@ const region: Template<TemplateRenderProps> = ({
             let slug = slugString;
             detlslug1 = `${slug}.html`;
           } else {
-            detlslug1 = `${res.slug.toString()}.html`;
+            detlslug1 = `/${res.slug.toString()}.html`;
           }
 
           detlslug = detlslug1;
 
         })
       } else {
-        detlslug = "gb/" + slug + "/" + entity.slug + ".html";
+        detlslug = "uk/" + slug + "/" + entity.slug + ".html";
       }
 
     }

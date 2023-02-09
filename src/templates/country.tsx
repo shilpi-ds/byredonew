@@ -67,6 +67,7 @@ export const config: TemplateConfig = {
 export const getPath: GetPath<TemplateProps> = ({ document }) => {
   currentUrl = "/" + document.slug.toString() + ".html";
   return "/" + document.slug.toString() + ".html";
+  //return 'dm.html';
 };
 
 // export const getRedirects: GetRedirects<TemplateProps> = ({ document }) => {
@@ -210,7 +211,7 @@ const country: Template<TemplateRenderProps> = ({
   const childrenDivs = dm_directoryChildren ? dm_directoryChildren.map((entity: any) => {
     let detlslug;
 
-
+console.log(entity.dm_directoryChildrenCount);
     if (typeof entity.dm_directoryChildren != "undefined") {
       if (entity.dm_directoryChildrenCount == 1) {
         entity.dm_directoryChildren.map((res: any) => {
@@ -222,13 +223,13 @@ const country: Template<TemplateRenderProps> = ({
             let slug = slugString;
             detlslug1 = `${slug}.html`;
           } else {
-            detlslug1 = `${res.slug.toString()}.html`;
+            detlslug1 = `/${res.slug.toString()}.html`;
           }
-          // if (res.meta.entityType.id == 'ce_city') {
-          //   detlslug1 = "gb/" + detlslug1;
-          // } else {
-          //   detlslug1 = detlslug1;
-          // }
+          //  if (res.meta.entityType.name == 'ce_city') {
+          //    detlslug1 = "gb/" + detlslug1;
+          //  } else {
+          //    detlslug1 = detlslug1;
+          //  }
 
           // console.log(entity.name, res);
 
