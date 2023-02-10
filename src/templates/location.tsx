@@ -12,6 +12,7 @@ import Logo from "../images/logo-header.svg"
 import offerBanner from "../images/offer-banner.jpg"
 import IframeMap from "../components/locationDetail/IframeMap";
 import Address from "../components/commons/Address";
+import OpenClose from "../components/commons/openClose";
 import "../index.css";
 import {
   Template,
@@ -35,7 +36,7 @@ import Breadcrumb from "../components/layouts/Breadcrumb";
 import CustomMap from "../components/locationDetail/CustomMap";
 import BreadCrumbs from "../components/layouts/Breadcrumb";
 import StoreHighlight from "../components/locationDetail/SoreHighlight";
-import OpenClose from "../components/commons/openClose";
+
 import Faq from "../components/locationDetail/Faqs";
 import { StaticData } from "../../sites-global/staticData";
 import loc1 from "../images/loc1.svg";
@@ -53,7 +54,7 @@ import FeaturesBrand from "../components/locationDetail/FeaturesBrand";
 import { Fade, Slide } from "react-awesome-reveal";
 import MgmTimber from "../components/locationDetail/MgmTimber";
 import { AnswerExperienceConfig } from "../config/answersHeadlessConfig";
-
+import GetDirection from "../components/commons/GetDirection";
 /**
  * Required when Knowledge Graph data is used for a template.
  */
@@ -488,13 +489,58 @@ breadcrumbScheme.push({
 
       <div className="container">
             <div className='banner-text banner-dark-bg justify-center text-center'>
-              <h1 className="">{name}</h1>
+              {/* <h1 className="">{name}</h1> */}
                 <div className="openClosestatus detail-page closeing-div">
                   <OpenClose timezone={timezone} hours={hours} />
                 </div> 
             </div>
           </div>
           <div className="location-information">
+          <div className="address-main-sec">
+        {/* <h4 className="box-title">{name?name:"Store Details"}</h4> */}
+
+        <div className="icon-row content-col">
+          <div className="icon">
+            {" "}
+            <img className=" " src={loc1} width="20" height="20" alt="mapimage" />
+          </div>
+          <div className="  address-text notHighlight">
+           <div>{name}</div> {address.line1}
+            <div>{address.line2 && <div>{address.line2}</div>}</div>
+            <div>{address.city}</div>
+            <div>{address.postalCode}</div>
+          </div>
+        </div>
+       
+        {mainPhone ? (
+          <div className="icon-row">
+            <div className="icon">
+              {" "}
+              <img className=" " src={loc2} width="22" height="22" alt="phonesvg" />
+            </div>
+            <div className="content-col">
+              <a id="address" className=" location-phn" href={`tel:${mainPhone}`}>
+                {mainPhone}
+              </a>
+            </div>
+          </div>
+        ) : (
+          ""
+        )}
+           {hours && (
+                            <div className="openClosestatus detail-page closeing-div">
+                            <OpenClose timezone={timezone} hours={hours} />
+                          </div> 
+                          )}
+        <ul className="">
+          <li className="button-bx direction-button">{displayCoordinate ?
+          <GetDirection buttonText={StaticData.getDirection} address={address} latitude={displayCoordinate?.latitude} longitude={displayCoordinate?.longitude} />
+          : <GetDirection buttonText={StaticData.getDirection} address={address} latitude={yextDisplayCoordinate?.latitude} longitude={yextDisplayCoordinate?.longitude} />
+        }
+          </li>
+        </ul>
+ </div>
+ 
             {/* <div className="loc-name">{name}</div>
           <Address address={address} />
           <div className="loc-phone">
@@ -502,10 +548,9 @@ breadcrumbScheme.push({
           alt={''} /></div>
           <h4><a href={`tel:${mainPhone}`}>{mainPhone}</a></h4></div> */}
           
-       {/* <Contact address={address} 
-           phone={mainPhone} latitude={yextDisplayCoordinate ? yextDisplayCoordinate?.latitude : displayCoordinate?.latitude}
-           yextDisplayCoordinate={yextDisplayCoordinate} longitude={yextDisplayCoordinate ? yextDisplayCoordinate?.longitude : displayCoordinate?.longitude} hours={hours}  additionalHoursText={additionalHoursText} ></Contact>
-            */}
+       <Contact address={address} 
+            hours={hours}  additionalHoursText={additionalHoursText} ></Contact>
+           
           {
             hours ?
               <div className="map-sec" id="map_canvas">

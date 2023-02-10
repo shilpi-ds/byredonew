@@ -28,56 +28,7 @@ const Contact = (props: any) => {
   
   return (
     <>
-      <div className="address-main-sec">
-        <h4 className="box-title">{c_storeInfoHeading?c_storeInfoHeading:"Store Details"}</h4>
-
-        <div className="icon-row content-col">
-          <div className="icon">
-            {" "}
-            <img className=" " src={mapimage} width="20" height="20" alt="mapimage" />
-          </div>
-          <div className="  address-text notHighlight">
-           <div>{name}</div> {address.line1}
-            <div>{address.line2 && <div>{address.line2}</div>}</div>
-            <div>{address.city}</div>
-            <div>{address.postalCode}</div>
-          </div>
-        </div>
-
-        {phone ? (
-          <div className="icon-row">
-            <div className="icon">
-              {" "}
-              <img className=" " src={Phonesvg} width="22" height="22" alt="phonesvg" />
-            </div>
-            <div className="content-col">
-              <a id="address" className=" location-phn" href={`tel:${phone}`}>
-                {phone}
-              </a>
-            </div>
-          </div>
-        ) : (
-          ""
-        )}
-
-        <ul className="">
-          <li className="button-bx direction-button">
-            <GetDirection
-              buttonText={c_getDirectionsCTAText?c_getDirectionsCTAText:StaticData.getDirection}
-              address={address}
-              latitude={latitude}
-              longitude={longitude}
-            />
-          </li>
-        </ul>
-
-        <div className="map-sec">
-          <CustomMap prop={yextDisplayCoordinate} />
-        </div>
-
-      </div>
-
-      {hours && typeof hours.monday != "undefined" ? (
+        {hours && typeof hours.monday != "undefined" ? (
         <div className="hours">
           <div className="hours-sec">
             <div className="title-with-link-1">
