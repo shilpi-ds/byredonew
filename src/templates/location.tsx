@@ -11,6 +11,7 @@ import { nearByLocation } from "../types/nearByLocation";
 import Logo from "../images/logo-header.svg"
 import offerBanner from "../images/offer-banner.jpg"
 import IframeMap from "../components/locationDetail/IframeMap";
+import Address from "../components/commons/Address";
 import "../index.css";
 import {
   Template,
@@ -37,7 +38,9 @@ import StoreHighlight from "../components/locationDetail/SoreHighlight";
 import OpenClose from "../components/commons/openClose";
 import Faq from "../components/locationDetail/Faqs";
 import { StaticData } from "../../sites-global/staticData";
-
+import loc1 from "../images/loc1.svg";
+import loc2 from "../images/loc2.svg";
+import loc3 from "../images/loc3.svg";
 import Accordion from "../components/commons/Accordion";
 //import PhotoSlider from "../components/locationDetails/PhotoSlider";
 import {apikey_for_entity, baseuRL,stagingBaseurl,AnalyticsEnableDebugging,AnalyticsEnableTrackingCookie } from "../../sites-global/global";
@@ -492,10 +495,17 @@ breadcrumbScheme.push({
             </div>
           </div>
           <div className="location-information">
-        {/* <Contact address={address} 
+            {/* <div className="loc-name">{name}</div>
+          <Address address={address} />
+          <div className="loc-phone">
+        <div className="icon-time"> <img className=" " src={loc2} width="20" height="20"
+          alt={''} /></div>
+          <h4><a href={`tel:${mainPhone}`}>{mainPhone}</a></h4></div> */}
+          
+       <Contact address={address} 
            phone={mainPhone} latitude={yextDisplayCoordinate ? yextDisplayCoordinate?.latitude : displayCoordinate?.latitude}
            yextDisplayCoordinate={yextDisplayCoordinate} longitude={yextDisplayCoordinate ? yextDisplayCoordinate?.longitude : displayCoordinate?.longitude} hours={hours}  additionalHoursText={additionalHoursText} ></Contact>
-           */}
+           
           {
             hours ?
               <div className="map-sec" id="map_canvas">
