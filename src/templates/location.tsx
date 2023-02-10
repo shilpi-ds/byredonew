@@ -521,17 +521,17 @@ breadcrumbScheme.push({
         <div className="faqs"><section className="faq-container">{c_relatedFaqs && <Accordion content={c_relatedFaqs}/> }</section></div>
         </div>
         
-        <div className="nearby-sec">
+        {/* <div className="nearby-sec">
           <div className="container">
             <div className="sec-title"><h2 className="">{StaticData.NearStoretext}</h2></div>
              <div className="nearby-sec-inner">
               {yextDisplayCoordinate || cityCoordinate || displayCoordinate ?
-                //  <Nearby externalApiData={externalApiData} /> 
+                 <Nearby externalApiData={externalApiData} /> 
              : ''}
             </div> 
           </div>
           
-        </div>
+        </div> */}
 
     
       </AnalyticsScopeProvider>
