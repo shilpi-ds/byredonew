@@ -328,7 +328,7 @@ const City: Template<TemplateRenderProps> = ({
           >
 
             {StaticData.StoreDetailbtn}</Link>
-          <GetDirection buttonText={StaticData.getDirection} address={entity.address} latitude={entity.yextDisplayCoordinate.latitude} longitude={entity.yextDisplayCoordinate.longitude} />
+          <GetDirection buttonText={StaticData.getDirection} address={entity.address} latitude={entity.yextDisplayCoordinate?.latitude} longitude={entity.yextDisplayCoordinate?.longitude} />
         </div>
       </div>
   );
