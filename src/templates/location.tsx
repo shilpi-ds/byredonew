@@ -251,20 +251,20 @@ export const getHeadConfig: GetHeadConfig<TemplateRenderProps> = ({
   };
 };
 type ExternalApiData = TemplateProps & { externalApiData: nearByLocation };
-// export const transformProps: TransformProps<ExternalApiData> = async (
-//   data: any
-// ) => {
+ export const transformProps: TransformProps<ExternalApiData> = async (
+   data: any
+ ) => {
 
-//   var location = `${data.document?.yextDisplayCoordinate ? data.document?.yextDisplayCoordinate?.latitude : data.document?.displayCoordinate?.latitude},${data.document?.yextDisplayCoordinate ? data.document?.yextDisplayCoordinate?.longitude : data.document?.displayCoordinate?.longitude}`;
+   var location = `${data.document?.yextDisplayCoordinate ? data.document?.yextDisplayCoordinate?.latitude : data.document?.displayCoordinate?.latitude},${data.document?.yextDisplayCoordinate ? data.document?.yextDisplayCoordinate?.longitude : data.document?.displayCoordinate?.longitude}`;
 
-//     const url = `${AnswerExperienceConfig.endpoints.verticalSearch}?experienceKey=${AnswerExperienceConfig.experienceKey}&api_key=${AnswerExperienceConfig.apiKey}&v=20220511&version=${AnswerExperienceConfig.experienceVersion}&locale=${AnswerExperienceConfig.locale}&location=${location}&locationRadius=${AnswerExperienceConfig.locationRadius}&verticalKey=${AnswerExperienceConfig.verticalKey}&limit=4&retrieveFacets=true&skipSpellCheck=false&sessionTrackingEnabled=true&source=STANDARD`;
-//  console.log(url)
-//   const externalApiData = (await fetch(url).then((res: any) =>
-//     res.json()
+     const url = `${AnswerExperienceConfig.endpoints.verticalSearch}?experienceKey=${AnswerExperienceConfig.experienceKey}&api_key=${AnswerExperienceConfig.apiKey}&v=20220511&version=${AnswerExperienceConfig.experienceVersion}&locale=${AnswerExperienceConfig.locale}&location=${location}&locationRadius=${AnswerExperienceConfig.locationRadius}&verticalKey=${AnswerExperienceConfig.verticalKey}&limit=4&retrieveFacets=true&skipSpellCheck=false&sessionTrackingEnabled=true&source=STANDARD`;
+  console.log(url)
+   const externalApiData = (await fetch(url).then((res: any) =>
+     res.json()
 
-//   )) as nearByLocation;
-//   return { ...data, externalApiData };
-// };
+   )) as nearByLocation;
+   return { ...data, externalApiData };
+ };
 
 
 
@@ -522,7 +522,7 @@ breadcrumbScheme.push({
         <div className="faqs"><section className="faq-container">{c_relatedFaqs && <Accordion content={c_relatedFaqs}/> }</section></div>
         </div>
         
-        {/* <div className="nearby-sec">
+         <div className="nearby-sec">
           <div className="container">
             <div className="sec-title"><h2 className="">{StaticData.NearStoretext}</h2></div>
              <div className="nearby-sec-inner">
@@ -532,7 +532,7 @@ breadcrumbScheme.push({
             </div> 
           </div>
           
-        </div> */}
+        </div> 
 
     
       </AnalyticsScopeProvider>
