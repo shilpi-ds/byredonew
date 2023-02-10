@@ -502,10 +502,10 @@ breadcrumbScheme.push({
           alt={''} /></div>
           <h4><a href={`tel:${mainPhone}`}>{mainPhone}</a></h4></div> */}
           
-       <Contact address={address} 
+       {/* <Contact address={address} 
            phone={mainPhone} latitude={yextDisplayCoordinate ? yextDisplayCoordinate?.latitude : displayCoordinate?.latitude}
            yextDisplayCoordinate={yextDisplayCoordinate} longitude={yextDisplayCoordinate ? yextDisplayCoordinate?.longitude : displayCoordinate?.longitude} hours={hours}  additionalHoursText={additionalHoursText} ></Contact>
-           
+            */}
           {
             hours ?
               <div className="map-sec" id="map_canvas">
@@ -531,18 +531,18 @@ breadcrumbScheme.push({
         <div className="faq-title">How can we help ?</div>
         <div className="faqs"><section className="faq-container">{c_relatedFaqs && <Accordion content={c_relatedFaqs}/> }</section></div>
         </div>
-        
+        {yextDisplayCoordinate || cityCoordinate || displayCoordinate ?
          <div className="nearby-sec">
           <div className="container">
             <div className="sec-title"><h2 className="">{StaticData.NearStoretext}</h2></div>
              <div className="nearby-sec-inner">
-              {yextDisplayCoordinate || cityCoordinate || displayCoordinate ?
+              
                  <Nearby externalApiData={externalApiData} /> 
-             : ''}
+            
             </div> 
           </div>
           
-        </div> 
+        </div>  : ''}
 
     
       </AnalyticsScopeProvider>
