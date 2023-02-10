@@ -65,17 +65,17 @@ export const getPath: GetPath<TemplateProps> = ({ document }) => {
   if (document.dm_directoryParents) {
     document.dm_directoryParents?.map((i: any) => {
       if (i.meta.entityType.id == "ce_country") {
-        currentUrl = `${i.slug}/${document.slug.toString()}.html`;
+        currentUrl = `${i.slug}/${document.slug?.toString()}.html`;
       } else if (i.meta.entityType.id == "ce_region") {
         let url = `${document.dm_directoryParents[1].slug}/${
           i.slug
-        }/${document.slug.toString()}.html`;
+        }/${document.slug?.toString()}.html`;
         currentUrl = url;
       }
     });
     return `${currentUrl}`;
   } else {
-    return `${document.slug.toString()}.html`;
+    return `${document.slug?.toString()}.html`;
   }
 };
 
@@ -263,17 +263,17 @@ const City: Template<TemplateRenderProps> = ({
     var url = "";
     var name: any = entity.name?.toLowerCase();
     var region: any = entity.address.region?.toLowerCase();
-    var initialregion: any = region.toString();
+    var initialregion: any = region?.toString();
     var finalregion: any = initialregion?.replaceAll(" ", "-");
     var city: any = entity.address.city?.toLowerCase();
-    var initialrcity: any = city.toString();
+    var initialrcity: any = city?.toString();
     var finalcity: any = initialrcity?.replaceAll(" ", "-");
-    var string: any = name.toString();;
+    var string: any = name?.toString();;
     let result: any = string?.replaceAll(" ", "-");
     if (!entity.slug) {
       url = `/${entity.id}-${result}.html`;
     } else {
-      url = `/${entity.slug.toString()}`;
+      url = `/${entity.slug?.toString()}`;
     }
 
 
@@ -342,7 +342,7 @@ const City: Template<TemplateRenderProps> = ({
       url = `${i.slug}`
     }
     else if (i.meta.entityType.id == 'ce_region') {
-      url = `${url}/${i.slug}/${document.slug.toString()}.html`
+      url = `${url}/${i.slug}/${document.slug?.toString()}.html`
     }
   })
   let breadcrumbScheme: any = [];
@@ -366,7 +366,7 @@ const City: Template<TemplateRenderProps> = ({
     "@type": "ListItem",
     position: currentIndex + 1,
     item: {
-      "@id": `${constant.stagingBaseurl}/${document.slug.toString()}.html`,
+      "@id": `${constant.stagingBaseurl}/${document.slug?.toString()}.html`,
       name: document.name,
     },
   });
