@@ -261,15 +261,15 @@ const City: Template<TemplateRenderProps> = ({
     }
     // let key: any = Object.keys(entity.hours)[0];
     var url = "";
-    var name: any = entity.name.toLowerCase();
-    var region: any = entity.address.region.toLowerCase();
+    var name: any = entity.name?.toLowerCase();
+    var region: any = entity.address.region?.toLowerCase();
     var initialregion: any = region.toString();
-    var finalregion: any = initialregion.replaceAll(" ", "-");
-    var city: any = entity.address.city.toLowerCase();
+    var finalregion: any = initialregion?.replaceAll(" ", "-");
+    var city: any = entity.address.city?.toLowerCase();
     var initialrcity: any = city.toString();
-    var finalcity: any = initialrcity.replaceAll(" ", "-");
+    var finalcity: any = initialrcity?.replaceAll(" ", "-");
     var string: any = name.toString();;
-    let result: any = string.replaceAll(" ", "-");
+    let result: any = string?.replaceAll(" ", "-");
     if (!entity.slug) {
       url = `/${entity.id}-${result}.html`;
     } else {
