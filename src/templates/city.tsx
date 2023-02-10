@@ -88,7 +88,7 @@ export const getHeadConfig: GetHeadConfig<TemplateRenderProps> = ({
 }): HeadConfig => {
   var canonical="";
    document?.dm_directoryChildren?.map((entity: any) => {
-      canonical=  entity.address.countryCode.toLowerCase().replaceAll(" ", "-") + '/' +  entity.address.region.toLowerCase().replaceAll(" ", "-");
+      canonical=  entity.address.countryCode?.toLowerCase().replaceAll(" ", "-") + '/' +  entity.address.region?.toLowerCase().replaceAll(" ", "-");
           })
 
   return {
@@ -197,7 +197,7 @@ export const getHeadConfig: GetHeadConfig<TemplateRenderProps> = ({
         type: "meta",
         attributes: {
           name: "twitter:url",
-          content: `/${document.slug?document.slug:`${document.name.toLowerCase()}`}.html`,
+          content: `/${document.slug?document.slug:`${document.name?.toLowerCase()}`}.html`,
         },
       },
 
