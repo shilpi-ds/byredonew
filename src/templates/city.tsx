@@ -47,8 +47,6 @@ export const config: TemplateConfig = {
       "dm_directoryParents.meta.entityType",
       "dm_directoryChildren.name",
       "dm_directoryChildren.mainPhone",
-      //"dm_directoryChildren.c_open_for_shopping",
-      //"dm_directoryChildren.c_click_collect_availability",
       "dm_directoryChildren.slug",
       "dm_directoryChildren.id",
       "dm_directoryChildren.dm_directoryChildrenCount",
