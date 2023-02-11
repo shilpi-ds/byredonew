@@ -44,8 +44,9 @@ import loc2 from "../images/loc2.svg";
 import loc3 from "../images/loc3.svg";
 import Accordion from "../components/commons/Accordion";
 //import PhotoSlider from "../components/locationDetails/PhotoSlider";
-import {apikey_for_entity, baseuRL,stagingBaseurl,AnalyticsEnableDebugging,AnalyticsEnableTrackingCookie } from "../../sites-global/global";
-import { favicon } from "../../sites-global/global";
+import {apikey_for_entity, baseuRL,stagingBaseurl,AnalyticsEnableDebugging,AnalyticsEnableTrackingCookie,GoogleSearchConsole } from "../../sites-global/global";
+//import { favicon } from "../../sites-global/global";
+import favicon from "../images/favicon.png";
 import {
   AnalyticsProvider,
   AnalyticsScopeProvider,
@@ -93,6 +94,11 @@ export const config: TemplateConfig = {
     "c_servicesFooter",
     "c_footerStoreLocator",
    "photoGallery",
+    /*seo*/
+    "c_canonicalURL",
+    "c_metaDescription",
+    "c_metaTitle",
+    "c_robotsTag",
     ],
     // Defines the scope of entities that qualify for this stream.
     filter: {
@@ -150,37 +156,66 @@ export const getRedirects: GetRedirects<TemplateProps> = ({ document }) => {
  * This can include the title, meta tags, script tags, etc.
  */
 export const getHeadConfig: GetHeadConfig<TemplateRenderProps> = ({
-  relativePrefixToRoot,
-  path,
   document,
 }): HeadConfig => {
+  let url = "";
+  if (!document.slug) {
+    let slugString = document.id + " " + document.name;
+    let slug = slugify(slugString);
+    url = `${slug}`;
+  } else {
+    url = `${document.slug.toString()}`;
+  }
+  // <meta name="google-site-verification" content="WIqhwAw2ugRAKEYRRqis1ZfUBbnWe_AXSoDltHceCbI" />
+  let metaDescription = document.c_metaDescription
+    ? document.c_metaDescription
+    : `${document.name} | Shop Byredos Collection of Perfumes, Candles, Makeup, Leather And Body Care. Free shipping & Free returns. Complimentary samples.`;
+  let metaTitle = document.c_metaTitle
+    ? document.c_metaTitle
+    : `${document.name} | BYREDO Official Site | Perfumes, Candles & Body Care`;
   return {
-    title: document._site.c_metaTitle?document._site.c_metaTitle:`${document.name} Store of Byredo`,
+    title: metaTitle,
     charset: "UTF-8",
-    viewport: "width=device-width, initial-scale=1",
+    viewport:
+      "width=device-width, initial-scale=1.0, maximum-scale=1, minimum-scale=1, user-scalable=0",
     tags: [
       {
         type: "meta",
         attributes: {
+          name: GoogleSearchConsole.name,
+          content: GoogleSearchConsole.content,
+        },
+      },
+      {
+        type: "meta",
+        attributes: {
           name: "description",
-          content: `${document._site.c_metaDescription?document._site.c_metaDescription:`Find the ${document.name} Byredo Store in ${document.address.city}. We stock high-quality, robust products at competitive rates.`}`,
+          content: `${metaDescription}`,
+        },
+      },
+      {
+        type: "link",
+        attributes: {
+          rel: "icon",
+          type: "image/png",
+          href: favicon,
         },
       },
 
-     
       {
         type: "meta",
         attributes: {
           name: "author",
-          content: StaticData.Brandname,
+          content: "Byredo",
         },
       },
-
       {
         type: "meta",
         attributes: {
           name: "robots",
-          content: "noindex, nofollow",
+          content: `${
+            document.c_robotsTag ? document.c_robotsTag : "noindex, nofollow"
+          }`,
         },
       },
 
@@ -188,38 +223,59 @@ export const getHeadConfig: GetHeadConfig<TemplateRenderProps> = ({
         type: "link",
         attributes: {
           rel: "canonical",
-          href: `${document._site.c_canonicalURL?document.c_canonicalURL:stagingBaseurl
-
-            }${document.slug?document.slug:`${document.name.toLowerCase()}`}`,
+          href: `${
+            document.c_canonical ? document.c_canonical : stagingBaseurl +  url
+          }`,
         },
       },
 
-      {
-        type: "meta",
-        attributes: {
-          property: "og:description",
-          content: `${document.c_metaDescription?document.c_metaDescription:`Find the ${document.name} Byredo Store in ${document.address.city}. We stock high-quality, robust products at competitive rates.`}`,
-        },
-      },
-      {
-        type: "link",
-        attributes: {
-          rel: "shortcut icon",
-          href: document._site.c_byradoLogo.image.url?document._site.c_byradoLogo.image.url:favicon,
-        },
-      },
+      //og tag
       {
         type: "meta",
         attributes: {
           property: "og:title",
-          content: `${document.name}`,
+          content: `${metaTitle}`,
         },
       },
       {
         type: "meta",
         attributes: {
+          property: "og:description",
+          content: `${metaDescription}`,
+        },
+      },
+      {
+        type: "meta",
+        attributes: {
+          property: "og:url",
+          content: stagingBaseurl  + url,
+        },
+      },
+
+      {
+        type: "meta",
+        attributes: {
           property: "og:image",
-          href: favicon,
+          content: `${
+            document.c_byradoLogo
+              ? document.c_byradoLogo.image.url
+              : "https://a.mktgcdn.com/p-sandbox/cgYD0VBchE2WzmtcTHsS1MlzQyFCTlbcmgppR7wnNE8/600x120.png"
+          }`,
+        },
+      },
+      //twitter tag
+      {
+        type: "meta",
+        attributes: {
+          property: "twitter:title",
+          content: `${metaTitle}`,
+        },
+      },
+      {
+        type: "meta",
+        attributes: {
+          name: "twitter:description",
+          content: `${metaDescription}`,
         },
       },
       {
@@ -232,26 +288,22 @@ export const getHeadConfig: GetHeadConfig<TemplateRenderProps> = ({
       {
         type: "meta",
         attributes: {
-          name: "twitter:title",
-          content: document.c_metaTitle?document.c_metaTitle:`${document.name} Store of Byredo`,
+          name: "twitter:url",
+          content: stagingBaseurl  + url,
         },
       },
       {
         type: "meta",
         attributes: {
-          name: "twitter:description",
-          content: `${document.c_metaDescription?document.c_metaDescription:`Find the ${document.name} Byredo Store in ${document.address.city}. We stock high-quality, robust products at competitive rates.`}`,
+          name: "twitter:image",
+          content: `${
+            document.c_byradoLogo
+              ? document.c_byradoLogo.image.url
+              : "https://a.mktgcdn.com/p-sandbox/cgYD0VBchE2WzmtcTHsS1MlzQyFCTlbcmgppR7wnNE8/600x120.png"
+          }`,
         },
       },
-      /// twitter tag
-
-
-
-
-
-
     ],
-
   };
 };
 type ExternalApiData = TemplateProps & { externalApiData: nearByLocation };
@@ -262,7 +314,7 @@ type ExternalApiData = TemplateProps & { externalApiData: nearByLocation };
    var location = `${data.document?.yextDisplayCoordinate ? data.document?.yextDisplayCoordinate?.latitude : data.document?.displayCoordinate?.latitude},${data.document?.yextDisplayCoordinate ? data.document?.yextDisplayCoordinate?.longitude : data.document?.displayCoordinate?.longitude}`;
 
      const url = `${AnswerExperienceConfig.endpoints.verticalSearch}?experienceKey=${AnswerExperienceConfig.experienceKey}&api_key=${AnswerExperienceConfig.apiKey}&v=20220511&version=${AnswerExperienceConfig.experienceVersion}&locale=${AnswerExperienceConfig.locale}&location=${location}&locationRadius=${AnswerExperienceConfig.locationRadius}&verticalKey=${AnswerExperienceConfig.verticalKey}&limit=4&retrieveFacets=true&skipSpellCheck=false&sessionTrackingEnabled=true&source=STANDARD`;
-  console.log(url)
+  //console.log(url)
    const externalApiData = (await fetch(url).then((res: any) =>
      res.json()
 
@@ -380,7 +432,7 @@ const Location: Template<ExternalApiRenderData> = ({
           j.meta.entityType.id != "ce_city" &&
           j.meta.entityType.id != "ce_root"
         ) {
-          console.log(j, "j");
+          //console.log(j, "j");
           url = url  + j.slug;
         }
       });
@@ -403,7 +455,7 @@ const Location: Template<ExternalApiRenderData> = ({
           j.meta.entityType.id != "ce_city" &&
           j.meta.entityType.id != "ce_root"
         ) {
-          console.log(j, "j");
+          //console.log(j, "j");
           url = url  + "/" + j.slug;
         }
       });
@@ -433,7 +485,7 @@ breadcrumbScheme.push({
   let imageurl = photoGallery ? photoGallery.map((element: any) => {
     return element.image.url
   }) : null;
-  console.log(document)
+ // console.log(document)
   let bannerimage = c_banner_image && c_banner_image.image.url;
 
 

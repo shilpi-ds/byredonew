@@ -27,6 +27,10 @@ export function slugify(slugString:any){
   return slugString.toLowerCase();
 };
 export const defaultTimeZone = "Europe/London";
+export const GoogleSearchConsole = { 
+  name : "google-site-verification",
+  content : "WIqhwAw2ugRAKEYRRqis1ZfUBbnWe_AXSoDltHceCbI"
+}
 export const AnswerExperienceConfig = {
   experienceKey: "byredo",
   locale: "en_GB",

@@ -14,9 +14,10 @@ import { Address } from "../types/search/locations";
 import { useSearchActions } from "@yext/search-headless-react";
 import { useEffect } from "react";
 import SearchLayout from "../components/locatorPage/SearchLayout";
-import {stagingBaseurl, AnalyticsEnableDebugging, AnalyticsEnableTrackingCookie} from "../../sites-global/global"
+import {stagingBaseurl, AnalyticsEnableDebugging, AnalyticsEnableTrackingCookie,GoogleSearchConsole} from "../../sites-global/global"
 import Newsletter from "../components/locatorPage/Newsletter";
-import { favicon } from "../../sites-global/global";
+//import { favicon } from "../../sites-global/global";
+import favicon from "../images/favicon.png";
 import { JsonLd } from "react-schemaorg";
 import { StaticData } from "../../sites-global/staticData";
 import Header from "../components/layouts/header";
@@ -44,7 +45,11 @@ export const config: TemplateConfig = {
       "c_footerHelpSection",
     "c_servicesFooter",
     "c_footerStoreLocator",
-
+/*Seo*/
+"c_metaTitle",
+"c_metaDescription",
+"c_canonicalURL",
+"c_robotsTag",
      
     ],
     // Defines the scope of entities that qualify for this stream.
@@ -67,106 +72,144 @@ export const getHeadConfig: GetHeadConfig<TemplateRenderProps> = ({
   path,
   document,
 }): HeadConfig => {
- return {
-   title:`${document.c_metaTitle?document.c_metaTitle:`BYREDO Official Site | Perfumes, Candles &amp; Body Care.`}`,
-   charset: "UTF-8",
-   viewport: "width=device-width, initial-scale=1",
-   tags: [
-     {
-       type: "meta",
-       attributes: {
-         name: "description",
-         content: `${document.c_metaDescription?document.c_metaDescription:`Shop Byredo’s Collection of Perfumes, Candles, Makeup, Leather And Body Care.Free shipping &amp; Free returns. Complimentary samples.`}`,
-       },
-     },
+  // <meta name="google-site-verification" content="WIqhwAw2ugRAKEYRRqis1ZfUBbnWe_AXSoDltHceCbI" />
+  let metaDescription = document.c_metaDescription
+    ? document.c_metaDescription
+    : `${document.name} | Shop Byredos Collection of Perfumes, Candles, Makeup, Leather And Body Care. Free shipping & Free returns. Complimentary samples.`;
+  let metaTitle = document.c_metaTitle
+    ? document.c_metaTitle
+    : `${document.name} - Stores in Everywhere`;
 
-     {
-       type: "meta",
-       attributes: {
-         name: "author",
-         content: StaticData.Brandname,
-       },
-     },
+  return {
+    title: metaTitle,
+    charset: "UTF-8",
+    viewport:
+      "width=device-width, initial-scale=1.0, maximum-scale=1, minimum-scale=1, user-scalable=0",
+    tags: [
+      {
+        type: "meta",
+        attributes: {
+          name: GoogleSearchConsole.name,
+          content: GoogleSearchConsole.content,
+        },
+      },
+      {
+        type: "link",
+        attributes: {
+          rel: "icon",
+          type: "image/png",
+          href: favicon,
+        },
+      },
 
-     {
-       type: "meta",
-       attributes: {
-         name: "robots",
-         content: "noindex, nofollow",
-       },
-     },
-     {
-      type: "link",
-      attributes: {
-        rel: "shortcut icon",
-        href: document._site.c_byradoLogo.image.url?document._site.c_byradoLogo.image.url:favicon,
+      {
+        type: "meta",
+        attributes: {
+          name: "description",
+          content: `${metaDescription}`,
+        },
       },
-    },
+      {
+        type: "meta",
+        attributes: {
+          name: "author",
+          content: "Well Pharma",
+        },
+      },
 
-     {
-       type: "link",
-       attributes: {
-         rel: "canonical",
-         href: `${
-           document._site.c_canonical?document.c_canonical:stagingBaseurl
-            
-         }`,
-       },
-     },
- 
-     {
-       type: "meta",
-       attributes: {
-         property: "og:description",
-         content: `${document._site.c_metaDescription?document._site.c_metaDescription:`Shop Byredo’s Collection of Perfumes, Candles, Makeup, Leather And Body Care.Free shipping &amp; Free returns. Complimentary samples.`}`,
-       },
-     },
-     {
-       type: "meta",
-       attributes: {
-         property: "og:title",
-         content: `${document._site.c_metaTitle?document._site.c_metaTitle:`BYREDO Official Site | Perfumes, Candles &amp; Body Care.`}`,
-       },
-     },
-     {
-       type: "meta",
-       attributes: {
-         property: "og:image",
-         content: favicon,
-       },
-     },
-     {
-      type: "meta",
-      attributes: {
-        name: "twitter:card",
-        content: "summary",
+      {
+        type: "meta",
+        attributes: {
+          name: "robots",
+          content: `${
+            document._site.c_robotsTag
+              ? document._site.c_robotsTag
+              : "noindex, nofollow"
+          }`,
+        },
       },
-    },
-    {
-      type: "meta",
-      attributes: {
-        name: "twitter:description",
-        content:`${document._site.c_metaDescription?document._site.c_metaDescription:`Shop Byredo’s Collection of Perfumes, Candles, Makeup, Leather And Body Care.Free shipping &amp; Free returns. Complimentary samples.`}`,
+
+      {
+        type: "link",
+        attributes: {
+          rel: "canonical",
+          href: `${
+            document.c_canonical
+              ? document.c_canonical
+              : stagingBaseurl
+          }`,
+        },
       },
-    },
-    {
-      type: "meta",
-      attributes: {
-        name: "twitter:title",
-        content: `${document._site.c_metaTitle?document._site.c_metaTitle:`BYREDO Official Site | Perfumes, Candles &amp; Body Care.`}`,
+      // og tags
+      {
+        type: "meta",
+        attributes: {
+          property: "og:title",
+          content: `${metaTitle}`,
+        },
       },
-    },
-    {
-      type: "meta",
-      attributes: {
-        name: "twitter:image",
-        content: favicon
+      {
+        type: "meta",
+        attributes: {
+          property: "og:description",
+          content: `${metaDescription}`,
+        },
       },
-    },
-   
-   ],
-   
- };
+      {
+        type: "meta",
+        attributes: {
+          property: "og:url",
+          content: stagingBaseurl,
+        },
+      },
+
+      {
+        type: "meta",
+        attributes: {
+          property: "og:image",
+          content: `${document.c_byradoLogo ? document.c_byradoLogo.image.url : "https://a.mktgcdn.com/p-sandbox/cgYD0VBchE2WzmtcTHsS1MlzQyFCTlbcmgppR7wnNE8/600x120.png"}`,
+        },
+      },
+      // twitter tag
+      {
+        type: "meta",
+        attributes: {
+          property: "twitter:title",
+          content: `${metaTitle}`,
+        },
+      },
+      {
+        type: "meta",
+        attributes: {
+          name: "twitter:card",
+          content: "summary",
+        },
+      },
+      {
+        type: "meta",
+        attributes: {
+          name: "twitter:url",
+          content: stagingBaseurl,
+        },
+      },
+
+      {
+        type: "meta",
+        attributes: {
+          name: "twitter:description",
+          content: `${metaDescription}`,
+        },
+      },
+
+      {
+        type: "meta",
+        attributes: {
+          name: "twitter:image",
+          content: `${document.c_byradoLogo ? document.c_byradoLogo.image.url : "https://a.mktgcdn.com/p-sandbox/cgYD0VBchE2WzmtcTHsS1MlzQyFCTlbcmgppR7wnNE8/600x120.png"}`,
+        },
+      },
+     ],
+  };
 };
 
 const Locator: Template<TemplateRenderProps>= ({

@@ -235,7 +235,7 @@ const region: Template<TemplateRenderProps> = ({
 
      if (entity.dm_directoryChildrenCount == 1) {
          entity.dm_directoryChildren?.map((res: any) => {
-          console.log(res,"res");
+          //console.log(res,"res");
            let detlslug1 = "";
 
           if (!res.slug) {
@@ -247,7 +247,7 @@ const region: Template<TemplateRenderProps> = ({
           }
 
          detlslug = detlslug1;
-         console.log(detlslug);
+         //console.log(detlslug);
 
          })
        } else {

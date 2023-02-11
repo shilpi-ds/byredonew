@@ -211,7 +211,7 @@ const country: Template<TemplateRenderProps> = ({
   const childrenDivs = dm_directoryChildren ? dm_directoryChildren.map((entity: any) => {
     let detlslug;
 
-console.log(entity.dm_directoryChildrenCount);
+//console.log(entity.dm_directoryChildrenCount);
     if (typeof entity.dm_directoryChildren != "undefined") {
       
         detlslug = slug + "/" + entity.slug + ".html";

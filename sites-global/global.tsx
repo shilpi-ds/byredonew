@@ -21,7 +21,10 @@ export const conversionDetailsPhone = {
 };
 export const center_latitude=51.5095146286;
 export const center_longitude=-0.1244828354;
-
+export const GoogleSearchConsole = { 
+  name : "google-site-verification",
+  content : "WIqhwAw2ugRAKEYRRqis1ZfUBbnWe_AXSoDltHceCbI"
+}
 
 
 

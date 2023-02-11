@@ -22,7 +22,7 @@ const Accordion = ({content }) => {
       
     <div className="card" key={index}>
     <div className="card-header" onClick={()=>handleToggle(index)} style={{cursor:"pointer"}}>
-     <h1 className="faq-page">{item.question}<span className="faq-sign">{(index===toggle)?'-':'+'}</span></h1></div>
+     <h2 className="faq-page">{item.question}<span className="faq-sign">{(index===toggle)?'-':'+'}</span></h2></div>
                         {(index===toggle)?<div className="faq-body"><p>{item.answer}</p></div>:''}
                      
                     </div>
