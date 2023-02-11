@@ -34,6 +34,7 @@ var centerLongitude = center_longitude;
 const SearchLayout = (props: any): JSX.Element => {
   const [isLoading, setIsloading] = React.useState(true);
   const [check, setCheck] = useState(false);
+  const [zoomlevel, setZoomlevel] = React.useState(3);
   type FilterHandle = React.ElementRef<typeof FilterSearch>;
   const filterRef = useRef<FilterHandle>(null);
   const locationResults = useFetchResults() || [];
@@ -60,26 +61,26 @@ const loading = useSearchState(s=>s.searchStatus.isLoading);
 
   const FirstLoad = () => {
     setCheck(true);
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        function (position) {
-          const params: any = {
-            latitude: position.coords.latitude,
-            longitude: position.coords.longitude,
-          };
-          params1 = params;
-          SetNewparam(params1);
-          mapzoom = 3;
-          searchActions.setUserLocation(params1);
-          searchActions.setVerticalLimit(limit);
-          searchActions.executeVerticalQuery();
-        },
-        function (error) {
-          if (error.code == error.PERMISSION_DENIED) {
-          }
-        }
-      );
-    }
+    // if (navigator.geolocation) {
+    //   navigator.geolocation.getCurrentPosition(
+    //     function (position) {
+    //       const params: any = {
+    //         latitude: position.coords.latitude,
+    //         longitude: position.coords.longitude,
+    //       };
+    //       params1 = params;
+    //       SetNewparam(params1);
+    //       mapzoom = 3;
+    //       searchActions.setUserLocation(params1);
+    //       searchActions.setVerticalLimit(limit);
+    //       searchActions.executeVerticalQuery();
+    //     },
+    //     function (error) {
+    //       if (error.code == error.PERMISSION_DENIED) {
+    //       }
+    //     }
+    //   );
+    // }
     params1 = {
       latitude: 28.9811,
       longitude: 77.7106,
@@ -95,10 +96,10 @@ const loading = useSearchState(s=>s.searchStatus.isLoading);
     }, 3100);
   };
   const onClick = () => {
-
+    setZoomlevel(3);
    if (navigator.geolocation) {
     const error =(error:any) => {    
-     
+      
       if(error.code == 1){
         setallowLocation('Please allow your Location')
           
@@ -159,14 +160,14 @@ const loading = useSearchState(s=>s.searchStatus.isLoading);
   const handleInputValue = () => {
     setInputValue('');
   }
-  const handleSetUserShareLocation = (value:any, userShareStatus:boolean) => {
-    console.log(value,center_latitude,center_longitude,"value");
-    setInputValue(value);
-    if(userShareStatus){
-      setCenterLatitude(center_latitude);
-      setCenterLongitude(center_longitude);
-    }
-  }
+  // const handleSetUserShareLocation = (value:any, userShareStatus:boolean) => {
+  //   console.log(value,center_latitude,center_longitude,"value");
+  //   setInputValue(value);
+  //   if(userShareStatus){
+  //     setCenterLatitude(center_latitude);
+  //     setCenterLongitude(center_longitude);
+  //   }
+  // }
 
 
     function getCoordinates(address: String) {
@@ -300,7 +301,7 @@ const loading = useSearchState(s=>s.searchStatus.isLoading);
                 ]}
                 
                 handleInputValue={handleInputValue}  
-                handleSetUserShareLocation={handleSetUserShareLocation}
+                //handleSetUserShareLocation={handleSetUserShareLocation}
             />
 
             <button
@@ -329,8 +330,10 @@ const loading = useSearchState(s=>s.searchStatus.isLoading);
             <a className="btn mapBtn" href="javascript:void(0);" onClick={addClass}> Map View</a>
           </div>
         </div>
-        <div className=" map-section ">
+        <div className="map-section ">
           <GoogleMaps
+            zoomLevel={zoomlevel}
+            setZoomLevel={setZoomlevel}
             apiKey={googleApikey}
             centerLatitude={centerLatitude}
             centerLongitude={centerLongitude}
@@ -340,35 +343,26 @@ const loading = useSearchState(s=>s.searchStatus.isLoading);
           />
         </div>
 
-        <div className="left-listing">
-
-          <PerfectScrollbar >
-
-            <div>
-             
-                <VerticalResults
-                  displayAllOnNoResults={false}
-                  CardComponent={LocationCard}
-                  locationResults={locationinbuit}
-                  customCssClasses={{
-                    container:
-                      "result-list flex flex-col scroll-smooth  overflow-auto",
-
-                  }}
-                  // CardComponent={LocationCard}
-                />
-             
-      
-              {locationinbuit && locationinbuit.length <= 0 ?
-               <div className="browse-dir">
-               <a className="underline " href='/gb.html'>Use the search above or <span className="font-second-main-font"> browse our directory</span></a> 
-               </div>:''}
-                <div className="button-bx">
-               <ViewMore  className={" btn notHighlight lg:!w-[132%] !mb-2 button view-more"} idName={"view-more-button"} buttonLabel={"View More"} />
-               </div>
-            </div>
-          </PerfectScrollbar>
-        </div>
+        <div className="result-listing">
+            <PerfectScrollbar className="result-list">
+              {locationResults && locationResults.length > 0 && (
+                <div className="scrollbar-custom">
+                  <VerticalResults
+                    displayAllOnNoResults={false}
+                    CardComponent={LocationCard}
+                    locationResults={locationResults}
+                  />
+                </div>
+              )}
+            </PerfectScrollbar>
+            {locationResults && locationResults.length > 0 && (
+              <ViewMore
+                className={"button view-more before-icon"}
+                idName={"listing-view-more-button"}
+                buttonLabel={"Load More"}
+              />
+            )}
+          </div>
 
 
       </div>

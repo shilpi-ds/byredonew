@@ -16,6 +16,17 @@ export const countrySavedFilterId = "dm_stores-directory_address_countrycode";
 export const citySavedFilterId = "dm_stores-directory_address_city";
 export const stateSavedFilterId = "dm_stores-directory_address_region";
 export const rootSavedFilterId = "dm_stores-directory";
+export function slugify(slugString:any){
+  slugString.toLowerCase().toString();
+  slugString = slugString.replace(/[&\/\\#^+()$~%.'":*?<>{}!@]/, "");
+  slugString = slugString.replaceAll("  ", "-");
+  slugString = slugString.replaceAll(" ", "-");
+  slugString = slugString.replaceAll("---","-");
+  slugString = slugString.replaceAll("--","-");
+  slugString = slugString.replaceAll("'","");
+  return slugString.toLowerCase();
+};
+export const defaultTimeZone = "Europe/London";
 export const AnswerExperienceConfig = {
   experienceKey: "byredo",
   locale: "en_GB",

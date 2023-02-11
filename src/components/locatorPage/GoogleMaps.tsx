@@ -1,48 +1,34 @@
 import { Wrapper } from "@googlemaps/react-wrapper";
-// import { Result, useAnswersState } from '@yext/answers-headless-react';
-import {
-  useSearchState,
-  Result,
-  useSearchActions,
-} from "@yext/search-headless-react";
+import { useSearchState, Result } from "@yext/search-headless-react";
 import * as React from "react";
 import { useEffect, useRef, useState } from "react";
 import {
   twMerge,
   useComposedCssClasses,
-} from "../../hooks/useComposedCssClasses";
-import Mapicon2 from "../../images/redopin.svg";
-import clustericon from "../../images/cluster.png";
-import mapimage from "../../images/map.svg";
-import timesvg from "../../images/loc3.svg";
-import Hovermap from "../../images/redopinhover.svg"
-import Hours from "../commons/hours";
-import reactElementToJSXString from "react-element-to-jsx-string";
-import Nav from "../layouts/Nav";
-import UserMarker from "../../images/map-center.svg";
-import { renderToString } from "react-dom/server";
-import LocationCard from "./LocationCard";
-import Opening from "../commons/openClose";
-import GetDirection from "../commons/GetDirection";
-import { MarkerClusterer } from "@googlemaps/markerclusterer";
-import Address from "../commons/Address";
-import Phonesvg from "../../images/loc2.svg";
-import { ResultsCount } from "@yext/search-ui-react";
-import OpenClose from "../commons/openClose";
-import $ from "jquery";
-import { Directionsvg, View_Store } from "../../../sites-global/global";
-import { StaticData } from "../../../sites-global/staticData";
+} from "..//../hooks/useComposedCssClasses";
 import useFetchResults from "../../hooks/useFetchResults";
+import Address from "../commons/Address";
+import { Link } from "@yext/pages/components";
+import Phone from "../commons/phone";
+import Mapicon from "../../images/redopinhover.svg";
+import UserMarker from "../../images/map-center.svg";
+import MapiconHover from "../../images/redopinhover.svg";
+import Hours from "../commons/hours";
+import { renderToString } from "react-dom/server";
+import { MarkerClusterer } from "@googlemaps/markerclusterer";
+import OpenCloseStatus from "../../components/commons/OpenCloseStatus";
+import { svgIcons } from "../../images/svg-icons/svgIcon";
+import clustericon from "../../images/cluster.png";
+import getDirectionUrl from "../commons/GetDirection";
+import { slugify, defaultTimeZone } from "../../config/answersHeadlessConfig";
+import $ from "jquery";
+import { Marker } from "mapbox-gl";
+let marker:any;
 /**
  * CSS class interface for the {@link GoogleMaps} component
  *
  * @public
  */
-declare global {
-  interface Window {
-    getdirection: any;
-  }
-}
 export interface GoogleMapsCssClasses {
   googleMapsContainer?: string;
 }
@@ -58,16 +44,19 @@ export interface GoogleMapsProps {
   centerLongitude: number;
   defaultZoom: number;
   showEmptyMap: boolean;
+  zoomLevel: number;
+  setZoomLevel: any;
   check: boolean;
   providerOptions?: google.maps.MapOptions;
   customCssClasses?: GoogleMapsCssClasses;
+  refLcation: any;
 }
 
 type UnwrappedGoogleMapsProps = Omit<GoogleMapsProps, "apiKey" | "locale">;
 let mapMarkerClusterer: { clearMarkers: () => void } | null = null;
-// let infoWindow:any = null;
+
 const builtInCssClasses: Readonly<GoogleMapsCssClasses> = {
-  googleMapsContainer: "locator-map-block",
+  googleMapsContainer: "w-full  h-[80vh] md:h-[calc(100vh_-_0px)] top-0 z-[99]",
 };
 
 /**
@@ -78,6 +67,7 @@ const builtInCssClasses: Readonly<GoogleMapsCssClasses> = {
  *
  * @public
  */
+let location:any;
 export function GoogleMaps(props: GoogleMapsProps) {
   return (
     <div>
@@ -93,123 +83,112 @@ function UnwrappedGoogleMaps({
   centerLongitude,
   defaultZoom: zoom,
   showEmptyMap,
-  check,
+  zoomLevel,
+  setZoomLevel,
   providerOptions,
   customCssClasses,
+  check,
+  refLcation,
 }: UnwrappedGoogleMapsProps) {
   const ref = useRef<HTMLDivElement>(null);
   const [map, setMap] = useState<google.maps.Map>();
   const [downinfo, setDownInfo] = useState(true);
-  const [hover, setHover] = useState(true);
-  const loading = useSearchState((s) => s.searchStatus.isLoading);
- 
-  let isHover = true;
-  const searchZoom: number | number | null | undefined = null;
-  let currentMapZoom: number | undefined = 0;
+  var isHover = true;
+  let searchZoom: number | Number | null | undefined = null;
+  let currentMapZoom: Number | undefined = 0;
   let stopAnimation = false;
-  // if(!infoWindow){ infoWindow = new google.maps.InfoWindow();}
   let center: any = {
     lat: Number,
     lng: Number,
   };
-  let centerlast: any = {
-    lat: Number,
-    lng: Number,
-  };
+  console.log(map?.getZoom,"zoom")
+  const locationResults = useFetchResults() || [];
+  const alternateResult =
+    useSearchState(
+      (s) => s.vertical.noResults?.allResultsForVertical.results
+    ) || [];
 
-  const refLocationResults = useRef({});
+  // const locationResults = useSearchState(s => s.vertical.results) || [];
+  locationResults.map((result: any, i: Number) => {
+    if (i == 0) {
+      center = {
+        lat: result.rawData.yextDisplayCoordinate
+          ? result.rawData.yextDisplayCoordinate.latitude
+          : result.rawData.displayCoordinate.latitude,
+        lng: result.rawData.yextDisplayCoordinate
+          ? result.rawData.yextDisplayCoordinate.longitude
+          : result.rawData.displayCoordinate.longitude,
+      };
+    }
+  });
 
-  const locationResults = useSearchState(state => state.vertical?.results) || [];
-  refLocationResults.current = locationResults;
+  // openInfoWindow = false;
+  // const locationBias = useSearchState((s) => s.vertical.results) || [];
 
-  locationResults.length > 0
-    ? locationResults.map((result: any, i: number) => {
-        if (i == 0 && result) {
-          center = {
-            lat: result.rawData.yextDisplayCoordinate
-              ? result.rawData.yextDisplayCoordinate.latitude
-              : result.rawData.displayCoordinate.latitude,
-            lng: result.rawData.yextDisplayCoordinate
-              ? result.rawData.yextDisplayCoordinate.longitude
-              : result.rawData.displayCoordinate.longitude,
-          };
-        }
-      })
-    : (center = {
-        lat: centerLatitude,
-        lng: centerLongitude,
-      });
+  // const userlat = useSearchState(s => s.location.locationBias) || [];
 
-  let info = false;
+  const [hover, setHover] = useState(true);
+  var openInfoWindow = false;
   const cssClasses = useComposedCssClasses(builtInCssClasses, customCssClasses);
   const noResults = !locationResults.length;
   let containerCssClass = cssClasses.googleMapsContainer;
-
   if (noResults && !showEmptyMap) {
     containerCssClass = twMerge(cssClasses.googleMapsContainer, "hidden");
   }
-
-  const pinStyles = {
-    fill: "#da261b", //default google red
-    stroke: "#da261b",
+  let pinStyles = {
+    fill: "#4e9c34", //default google red
+    stroke: "#4e9c34",
     text: "white",
-    fill_selected: "#000",
-    stroke_selected: "#000",
-    text_selected: "#fff",
+    fill_selected: "#2c702e",
+    stroke_selected: "#4e9c34",
+    text_selected: "white",
   };
 
-  const marker_icon = {
-    // default google pin path
-    /*path: "M18.942,56.14C2.965,32.568,0,30.149,0,21.486A21.3,21.3,0,0,1,21.111,0,21.3,21.3,0,0,1,42.222,21.486c0,8.663-2.965,11.082-18.942,34.654a2.614,2.614,0,0,1-4.339,0Zm2.17-25.7a8.954,8.954,0,1,0-8.8-8.953A8.875,8.875,0,0,0,21.111,30.439Z",*/
-    url: Mapicon2,
+  /** Marker icon*/
+  let marker_icon = {
+    url: Mapicon,
     fillColor: pinStyles.fill,
-    scale: 1,
+    scale: 0.8,
     fillOpacity: 1,
     strokeColor: pinStyles.stroke,
     strokeWeight: 1,
     labelOrigin: new google.maps.Point(21, 22),
   };
-  function zoomMapTo(zoomTo, centerToSet = false) {
-    currentMapZoom = map.getZoom();
-    const newZoom =
-      currentMapZoom > zoomTo ? currentMapZoom - 1 : currentMapZoom + 1;
-    map.setZoom(newZoom);
-    if (newZoom != zoomTo && !stopAnimation)
-      sleep(200).then(() => {
-        zoomMapTo(zoomTo, centerToSet);
-      });
-    if (newZoom == zoomTo) {
-      stopAnimation = false;
-      if (centerToSet) {
-        if (typeof map.panTo != "undefined") {
-          map.panTo(centerToSet);
-        } else {
-          map.setCenter(centerToSet);
-        }
-      }
-    }
-  }
+
+  /** Marker Hover icon*/
+  let marker_hover_icon = {
+    url: MapiconHover,
+    fillColor: pinStyles.fill,
+    scale: 0.8,
+    fillOpacity: 1,
+    strokeColor: pinStyles.stroke,
+    strokeWeight: 1,
+    labelOrigin: new google.maps.Point(21, 22),
+  };
+
+  // if (!infoWindow) {
+  //   infoWindow = new google.maps.InfoWindow();
+  // }
 
   const bounds = new google.maps.LatLngBounds();
-  const markers1 = useRef<google.maps.Marker[]>([]);
+  const markerPins = useRef<google.maps.Marker[]>([]);
   const usermarker = useRef<google.maps.Marker[]>([]);
   const infoWindow = useRef(new google.maps.InfoWindow());
-
   deleteMarkers();
   userdeleteMarkers();
-  // function getCoordinates(address:String){
 
   const userlat = useSearchState((s) => s.location.locationBias) || [];
   const iplat = userlat.latitude;
   const iplong = userlat.longitude;
   const position = {
-    lat: iplat,
-    lng: iplong,
+    lat: parseFloat(iplat),
+    lng: parseFloat(iplong),
   };
+
   const Usermarker1 = new google.maps.Marker({
     position,
     map,
-    icon: UserMarker
+    icon: UserMarker,
   });
   usermarker.current.push(Usermarker1);
 
@@ -218,29 +197,35 @@ function UnwrappedGoogleMaps({
       mapMarkerClusterer.clearMarkers();
     }
   } catch (e) {}
-  let i = 0;
-  for (const result of locationResults) {
-    i++;
-    const position = getPosition(result);
-    const marker = new google.maps.Marker({
-      position,
-      map,
-      icon: Mapicon2,
-      // label: {
-      //   text: String(i),
-      //   color: "white",
-      // },
-      // animation: google.maps.Animation.DROP
-    });
+  if (locationResults.length > 0) {
+    for (const result of locationResults) {
+      const position = getPosition(result);
+      const marker = new google.maps.Marker({
+        position,
+        map,
+        icon: marker_icon,
+      });
+      
+      location = new google.maps.LatLng(position.lat, position.lng);
+      markerPins.current.push(marker);
+    }
+  } else {
+    for (const result of alternateResult) {
+      const position = getPosition(result);
+      marker = new google.maps.Marker({
+        position,
+        map,
+        icon: marker_icon,
+      });
 
-    const location = new google.maps.LatLng(position.lat, position.lng);
-    bounds.extend(location);
-    markers1.current.push(marker);
+      location = new google.maps.LatLng(position.lat, position.lng);
+      markerPins.current.push(marker);
+      bounds.extend(location);
+    }
   }
-
-  if (markers1.current.length > 0) {
-    const markers = markers1.current;
-
+  /** Cluster color */
+  if (markerPins.current.length > 0) {
+    let markers = markerPins.current;
     mapMarkerClusterer = new MarkerClusterer({
       map,
       markers,
@@ -254,7 +239,8 @@ function UnwrappedGoogleMaps({
             icon: clustericon,
             label: {
               text: String(markers?.length),
-              color: "white",
+              color: "#fff",
+              fontWeight: "500",
             },
             //  animation: google.maps.Animation.DROP,
           });
@@ -264,102 +250,149 @@ function UnwrappedGoogleMaps({
   }
 
   useEffect(() => {
-    if (loading) {
-      setHover(true);
-    }
     if (ref.current && !map) {
       setMap(
         new window.google.maps.Map(ref.current, {
-          center,
+          //center,
           zoom,
+          styles: [
+            {
+              featureType: "administrative",
+              elementType: "all",
+              stylers: [
+                {
+                  visibility: "simplified",
+                },
+              ],
+            },
+            {
+              featureType: "landscape",
+              elementType: "all",
+              stylers: [
+                {
+                  visibility: "on",
+                },
+              ],
+            },
+            {
+              featureType: "poi",
+              elementType: "all",
+              stylers: [
+                {
+                  visibility: "off",
+                },
+              ],
+            },
+            {
+              featureType: "transit",
+              elementType: "all",
+              stylers: [
+                {
+                  visibility: "off",
+                },
+              ],
+            },
+          ],
           ...providerOptions,
         })
       );
-    } else if (markers1.current.length > 0 && map && check && hover) {
-
+    } else if (markerPins.current.length > 0 && map && check && hover) {
+       if(markerPins.current.length > 14){
+        bounds.extend(location);
+        setZoomLevel(2);
+       // map?.setZoom(2);
+       }
       setTimeout(function () {
-        const bounds = new google.maps.LatLngBounds();
-
-        if (markers1.current.length == 1) {
-          map.setCenter(center);
-          map.setZoom(10);
-        } else if (markers1.current.length > 0) {
-          for (let i = 0; i < locationResults.length; i++) {
-            centerlast = {
-              lat: locationResults[i].rawData.yextDisplayCoordinate
-                ? locationResults[i].rawData.yextDisplayCoordinate.latitude
-                : locationResults[i].rawData.displayCoordinate.latitude,
-              lng: locationResults[i].rawData.yextDisplayCoordinate
-                ? locationResults[i].rawData.yextDisplayCoordinate.longitude
-                : locationResults[i].rawData.displayCoordinate.longitude,
-            };
-            // bounds.extend(position);
-            bounds.extend(centerlast);
-            bounds.extend(position);
-          }
-          map.fitBounds(bounds);
-        }
+        map.panTo(position);
+        var bounds = new google.maps.LatLngBounds();
+        bounds.extend(location);
+        bounds.extend(position);
+        map?.fitBounds(bounds);
+        map?.setCenter(center);
+        map.setZoom(zoomLevel);
       }, 1000);
-    } else if (hover) {
-      map?.setZoom(zoom);
-      if (zoom > 4) {
-      }
-    }
-  }, [ref, center, map, providerOptions, zoom]);
+    } 
+    /** Binding Grid Listing click */
+    onGridClick(markerPins, marker_hover_icon, marker_icon);
+    onGridHover(markerPins, marker_hover_icon, marker_icon);
+  }, [center, map, providerOptions, zoom]);
 
-  gridHover(markers1, Hovermap, Mapicon2);
-  gridclick(markers1, Hovermap, Mapicon2);
-
-  for (let i = 0; i < markers1.current.length; i++) {
-    markers1.current[i].addListener("click", () => {
-      setHover(false);
-      if (!info) {
-        markers1.current[i].setIcon(Hovermap);
+  /** Open info window Click event*/
+  for (let i = 0; i < markerPins.current.length; i++) {
+    markerPins.current[i].addListener("click", () => {
+      setHover(false);       
+      let sss = document.querySelectorAll(".result");
+      for (let s = 0; s < sss.length; s++) {
+        if(s != i ){
+          sss[s].classList.remove("fixed-hover");
+          sss[s].classList.remove("active");
+          markerPins.current[s].setIcon(marker_icon);
+        }
       }
+
+      
+      // if (!openInfoWindow) {
+      markerPins.current[i].setIcon(marker_hover_icon);        
       locationResults.map((result, index) => {
         if (i == index) {
-          const resultelement = document.querySelectorAll(
+          let resultelement = document.querySelectorAll(
             `.result-list-inner-${index + 1}`
           );
           for (let index = 0; index < resultelement.length; index++) {
-            resultelement[index].classList.add("active");
-            resultelement[index].classList.add("fixed-hover");
+            resultelement[index].classList.add("active", "fixed-hover");
           }
-          const position = getPosition(locationResults[index]);
-          map.setCenter(position);
-          Infowindow(i, result);
+          let position = getPosition(locationResults[index]);
+          InfowindowContents(i, result);
           scrollToRow(index);
         }
-        map?.setZoom(13);
+        // setTimeout(() => {
+        //   map?.setZoom(13);
+        // }, 1000);
 
-        infoWindow.current.open(map, markers1.current[i]);
+        // var bounds = new google.maps.LatLngBounds();
+        //          bounds.extend(position);
+        //         map?.fitBounds(bounds);
+        //         map?.setCenter(center);
+        setTimeout(() => {
+          map?.setZoom(14);
+          //map?.panTo(position)
+          var bounds = new google.maps.LatLngBounds();
+          bounds.extend(position);
+          //map?.fitBounds(bounds);
+          //map?.setCenter(center);
+        }, 1000);
+         map?.setZoom(10);
+        openInfoWindow = true;
+        infoWindow.current.open(map, markerPins.current[i]);
       });
     });
 
-    markers1.current[i].addListener("mouseover", () => {
+    markerPins.current[i].addListener("mouseover", () => {
       if (hover) {
-        markers1.current[i].setIcon(Hovermap);
-
-        addActiveGrid(i);
+        markerPins.current[i].setIcon(marker_hover_icon);
+        // addActiveGrid(i);
+        if ($(window).width > 700){
+          addActiveGrid(i);
+        }
       }
     });
-    markers1.current[i].addListener("mouseout", () => {
+    markerPins.current[i].addListener("mouseout", () => {
       if (hover) {
-        markers1.current[i].setIcon(Mapicon2);
+        markerPins.current[i].setIcon(marker_icon);
       }
       if (hover) {
         removeActiveGrid(i);
       }
     });
   }
-
+  /** info window Close event*/
   if (infoWindow.current != null) {
     infoWindow.current.addListener("closeclick", () => {
       setHover(true);
-      info = false;
+      openInfoWindow = false;
       infoWindow.current.close();
       locationResults.map((result, index) => {
-        const resultelement = document.querySelectorAll(
+        let resultelement = document.querySelectorAll(
           `.result-list-inner-${index + 1}`
         );
         for (let index = 0; index < resultelement.length; index++) {
@@ -373,36 +406,40 @@ function UnwrappedGoogleMaps({
   function sleep(ms: any) {
     return new Promise((resolve) => setTimeout(resolve, ms));
   }
-
-  const hours = (result: any) => {
-    return <Hours hours={result} />;
-  };
-  function addActiveGrid(index: any) {
-    const elements = document.querySelectorAll(".result");
+  /** Active and Remove Grid */
+  
+  function addActiveGrid(index: number) {
+ //   e.preventDefault()
+    let elements = document.querySelectorAll(".result");
     for (let index = 0; index < elements.length; index++) {
       elements[index].classList.remove("active");
     }
     document.querySelectorAll(".result")[index].classList.add("active");
   }
   function removeActiveGrid(index: any) {
-    const elements = document.querySelectorAll(".result");
+    let elements = document.querySelectorAll(".result");
     for (let index = 0; index < elements.length; index++) {
       elements[index].classList.remove("active");
     }
     document.querySelectorAll(".result")[index].classList.remove("active");
   }
-  function gridHover(
+
+  /** Function Grid Hover*/
+  function onGridHover(
     markerPins: any,
     marker_hover_icon: any,
     marker_icon: any
   ) {
-    const elements = document.querySelectorAll(".result");
+    let elements = document.querySelectorAll(".result");
     for (let index = 0; index < elements.length; index++) {
       elements[index].addEventListener("mouseover", (e) => {
         if (hover) {
           markerPins.current[index].setIcon(marker_hover_icon);
-
-          addActiveGrid(index);
+          // $(window)
+          // alert("mobile");
+          if ($(window).width > 700){
+            addActiveGrid(index);
+          }
         }
       });
       elements[index].addEventListener("mouseout", () => {
@@ -419,48 +456,60 @@ function UnwrappedGoogleMaps({
       });
     }
   }
-  function gridclick(
+
+  /** Function Grid Click*/
+  function onGridClick(
     markerPins: any,
     marker_hover_icon: any,
     marker_icon: any
   ) {
-    const elements = document.querySelectorAll(".result");
+    let elements = document.querySelectorAll(".result");
     for (let index = 0; index < elements.length; index++) {
       if (!elements[index].classList.contains("markerEventBinded")) {
         elements[index].classList.add("markerEventBinded");
         elements[index].addEventListener("click", (e) => {
-          if (
-            !(e.target as HTMLInputElement).classList.contains("notHighlight")
-          ) {
+          if (!(e.target as HTMLElement).classList.contains("onhighLight")) {
+            // alert("check")
             if (index > 0) {
               markerPins.current[index - 1].setIcon(marker_icon);
             }
             $(".result").removeClass("fixed-hover");
-            // console.log('refLocationResults', refLocationResults);
-            refLocationResults.current.map((result, i) => {
+            locationResults.map((result:any, i:any) => {
               if (i == index) {
                 setHover(false);
                 isHover = false;
-                if (!info) {
+                if (!openInfoWindow) {
                   markerPins.current[index].setIcon(marker_hover_icon);
+                  
                 }
                 document
                   .querySelectorAll(".result")
                   [index].classList.add("fixed-hover");
-                addActiveGrid(index);
-                const position = {
-                  lat: result.rawData.yextDisplayCoordinate
-                    ? result.rawData.yextDisplayCoordinate.latitude
-                    : result.rawData.displayCoordinate.latitude,
-                  lng: result.rawData.yextDisplayCoordinate
-                    ? result.rawData.yextDisplayCoordinate.longitude
-                    : result.rawData.displayCoordinate.longitude,
-                };
+                if ($(window).width > 700){
+                  addActiveGrid(index);
+                }
+                // setTimeout(() => {
+                //   map?.setZoom(14);
+                //   //map?.panTo(position)
+                //   var bounds = new google.maps.LatLngBounds();
+                //   bounds.extend(position);
+                //   //map?.fitBounds(bounds);
+                //   //map?.setCenter(center);
+                // }, 1000);
+                //  map?.setZoom(10);
 
-                map?.setZoom(13);
-                map?.setCenter(position);
-                Infowindow(i, result);
-                infoWindow.current.open(map, markers1.current[index]);
+                setTimeout(() => {
+                  map?.setZoom(16);
+                }, 1000);
+                 map?.setZoom(10);
+                let position = getPosition(locationResults[index]);  
+                var bounds = new google.maps.LatLngBounds();      
+                bounds.extend(position);
+                // map?.fitBounds(bounds);
+                map?.setZoom(14);
+                // bounds.extend(center);
+                InfowindowContents(i, result);
+                infoWindow.current.open(map, markerPins.current[index]);
               }
             });
           }
@@ -468,205 +517,118 @@ function UnwrappedGoogleMaps({
       }
     }
   }
+
+  /**
+   *
+   * @param meters
+   * @returns Distance in Miles
+   */
   const metersToMiles = (meters: number) => {
     const miles = meters * 0.000621371;
     return miles.toFixed(2);
   };
 
-  function Infowindow(i: number, result: any): void {
-    info = true;
-    let url = "";
-
-    // const name: any = result.rawData.name?.toLowerCase();
-    // const region: any = result.rawData.address.region?.toLowerCase();
-    // const initialregion: any = region.toString();
-    // const finalregion: any = initialregion.replaceAll(" ", "-");
-    // const city: any = result.rawData.address.city?.toLowerCase();
-    // const initialrcity: any = city.toString();
-    // const finalcity: any = initialrcity.replaceAll(" ", "-");
-    // const string1: any = name.toString();
-    // const result1: any = string1.replaceAll(" ", "-");
-    // if (!result.rawData.slug) {
-    //   url = `${result.rawData.id}-${result1}.html`;
-    // } else {
-    //   url = `${result.rawData.slug.toString()}.html`;
-    // }
+  /** Function InfowindowContents returns Html*/
+  function InfowindowContents(i: Number, result: any): void {    
+    var url = "";
+    if (!result.rawData.slug) {
+      let slugString = result?.id + " " + result?.name;
+      let slug = slugify(slugString);
+      url = `${slug}.html`;
+    } else {
+      url = `${result.rawData.slug.toString()}.html`;
+    }
 
     const MarkerContent = (
-      <>
-        {" "}
-        <div className="flex w-full flex-col max-w-[24rem] pl-4  md:w-[22.5rem] font-main-font text-xs sm:text-sm lg:text-base">
-          <div className="location-name-miles">
-            {/* <div className="icon"> <img className=" " src={mapimage} width="20" height="20"
-        alt="" /></div> */}
-            <h2>
-              <a className="inline-block notHighlight" href={result.rawData.slug}>
-                {result.rawData.name}
-              </a>
-            </h2>
-          </div>
-          <div className="content-col info-window-content">
-            <Address address={result.rawData.address} />
-            {result.distance ? (
-              <div className="distance">
-                {metersToMiles(result.distance ?? 0)}{" "}
-                <span>{StaticData.miles}</span>
-              </div>
+      <div className="markerContent">
+        <div className="miles-with-title">
+          <h3 className="nameData">
+            <Link href={`${url}`}>{result.name} </Link>
+          </h3>
+          <p className="miles">{metersToMiles(result.distance ?? 0)} miles</p>
+        </div>
+        <Link
+          data-ya-track="getdirections"
+          eventName={`getdirections`}
+          className="addressmob"
+          href="javascript:void(0);"
+          id="some-button"
+          rel="noopener noreferrer"
+        >
+          <Address address={result.rawData.address} />
+        </Link>
+        <Phone phone={result.rawData.mainPhone} />
+        {/* <div>{hours(result.rawData.hours)} </div> */}
+
+        {result?.rawData?.hours ? (
+          <>
+            {Object.keys(result?.rawData?.hours).length > 1 ? (
+              <>
+                <div className="icon-row openStatus">
+                  <span className="icon">{svgIcons.openclosestatus}</span>
+                  <OpenCloseStatus
+                    hours={result?.rawData?.hours}
+                    timezone={
+                      result.rawData.timezone
+                        ? result.rawData.timezone
+                        : defaultTimeZone
+                    }
+                  />
+                </div>
+              </>
             ) : (
-              ""
+              <></>
             )}
-          </div>
-          {/* {result.rawData.mainPhone?
-    <div className="icon-row">
-      <div className="icon"> <img className=" " src={Phonesvg} width="20" height="20" alt="" />
-      </div>
-      <div className="content-col">
-        <h6>Telephone</h6>
-        <a id="address" className="notHighlight" href={`tel:${result.rawData.mainPhone}`}>
-          {result.rawData.mainPhone}</a>
-      </div>
-    </div>:''} */}
-
-          {result.rawData.hours && result.rawData.hours.reopenDate ? (
-            ""
-          ) : result.rawData.hours ? (
-            <div className="">
-              <OpenClose
-                timezone={result.rawData.timezone}
-                hours={result.rawData.hours}
-                infowindow={true}
-              />
-            </div>
-          ) : (
-            <div className="closeddot notHighlight red-dot">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="8"
-                height="8"
-                viewBox="0 0 8 8"
-              >
-                <circle
-                  id="Ellipse_5"
-                  data-name="Ellipse 5"
-                  cx="4"
-                  cy="4"
-                  r="4"
-                  fill="#ad1e1f"
-                />
-              </svg>
-              <div className="hours-info text-lg font-second-main-font closeddot">
-                Closed
-              </div>
-            </div>
-          )}
+          </>
+        ) : (
+          <></>
+        )}
+        <div className="map-buttons md:hidden text-center">
+          <Link
+            data-ya-track="getdirections"
+            eventName={`getdirections`}
+            className="direction button before-icon"
+            onClick={() => getDirectionUrl(result.rawData)}
+            href="javascript:void(0);"
+            id="some-button1"
+            rel="noopener noreferrer"
+            //conversionDetails={conversionDetails_direction}
+          >
+            <>{svgIcons.GetDirection} Directions </>
+          </Link>
+          <Link
+            className="button before-icon ml-2"
+            href={`tel:${result.rawData.mainPhone}`}
+          >
+            {svgIcons.phone} Call
+          </Link>
         </div>
-        <div className="button-bx !ml-4 !mb-0">
-          <a type="button" href={result.rawData.slug} className="btn">
-            {/* <div dangerouslySetInnerHTML={{__html: View_Store}}/> */}
-            {StaticData.StoreDetailbtn}
-          </a>
-          {result.rawData.displayCoordinate ? (
-            <a
-              data-listener="false"
-              data-latitude={result.rawData.displayCoordinate.latitude}
-              data-longitude={result.rawData.displayCoordinate.longitude}
-              className="cursor-pointer  getdirection btn"
-              rel="noopener noreferrer"
-              data-city={result.rawData.address.city}
-              data-country={result.rawData.address.countryCode}
-              data-region={result.rawData.address.region}
-            >
-              {/* <div dangerouslySetInnerHTML={{__html: Directionsvg}}/> */}
-              {StaticData.getDirection}
-            </a>
-          ) : (
-            <a
-              data-listener="false"
-              data-latitude={result.rawData.yextDisplayCoordinate.latitude}
-              data-longitude={result.rawData.yextDisplayCoordinate.longitude}
-              data-city={result.rawData.address.city}
-              data-country={result.rawData.address.countryCode}
-              data-region={result.rawData.address.region}
-              className="cursor-pointer getdirection1 btn"
-              rel="noopener noreferrer"
-            >
-              {/* <div dangerouslySetInnerHTML={{__html: Directionsvg}}/> */}
-              {StaticData.getDirection}
-            </a>
-          )}
-
-          {/* <GetDirection buttonText="Direction" latitude={result.rawData.displayCoordinate?.latitude} longitude={result.rawData.displayCoordinate?.longitude}/> */}
-        </div>
-      </>
+      </div>
     );
+    function mobiledirection() {
+      getDirectionUrl(result.rawData);
+    }
+    google.maps.event.addListener(infoWindow.current, "domready", (e: any) => {
+      const someButton = document.getElementById("some-button");
+      someButton?.addEventListener("click", mobiledirection);
+    });
 
-    const string = renderToString(MarkerContent);
+    google.maps.event.addListener(infoWindow.current, "domready", (e: any) => {
+      const someButton = document.getElementById("some-button1");
+      someButton?.addEventListener("click", mobiledirection);
+    });
+
+    let string = renderToString(MarkerContent);
     infoWindow.current.setContent(string);
   }
 
-  google.maps.event.addListener(infoWindow.current, "domready", () => {
-    let inputs;
-    inputs = document.getElementsByClassName("getdirection");
-    if (inputs.length == 0) {
-      inputs = document.getElementsByClassName("getdirection1");
-    }
-    for (let i = 0; i < inputs.length; i++) {
-      inputs[i].addEventListener("click", GetDirection);
-    }
-  });
-
-  function GetDirection(e: any) {
-    let origin: any = null;
-
-    if (e.target.dataset.city) {
-      origin = e.target.dataset.city;
-    } else if (e.target.dataset.region) {
-      origin = e.target.dataset.region;
-    } else {
-      origin = e.target.dataset.country;
-    }
-    if (navigator.geolocation) {
-      const error = (error: any) => {
-        const getDirectionUrl =
-          "https://www.google.com/maps/dir/?api=1&destination=" +
-          e.target.dataset.latitude +
-          "," +
-          e.target.dataset.longitude +
-          "&origin=" +
-          origin +
-          ",UK";
-        window.open(getDirectionUrl, "_blank");
-      };
-      navigator.geolocation.getCurrentPosition(
-        function (position) {
-          const currentLatitude = position.coords.latitude;
-          const currentLongitude = position.coords.longitude;
-          const getDirectionUrl =
-            "https://www.google.com/maps/dir/?api=1&destination=" +
-            e.target.dataset.latitude +
-            "," +
-            e.target.dataset.longitude +
-            "&origin=" +
-            currentLatitude +
-            "," +
-            currentLongitude;
-          window.open(getDirectionUrl, "_blank");
-        },
-        error,
-        {
-          timeout: 10000,
-        }
-      );
-    }
-  }
-
   function deleteMarkers(): void {
-    for (let i = 0; i < markers1.current.length; i++) {
-      markers1.current[i].setMap(null);
-      map?.setCenter(center);
+    for (let i = 0; i < markerPins.current.length; i++) {
+      markerPins.current[i].setMap(null);
     }
-    markers1.current = [];
+    markerPins.current = [];
   }
+
   function userdeleteMarkers(): void {
     for (let i = 0; i < usermarker.current.length; i++) {
       usermarker.current[i].setMap(null);
@@ -681,26 +643,31 @@ function UnwrappedGoogleMaps({
   );
 }
 
+// TEMPORARY FIX
+/* eslint-disable @typescript-eslint/no-explicit-any */
 function getPosition(result: Result) {
-  const lat = result.rawData.yextDisplayCoordinate
-    ? (result.rawData as any).yextDisplayCoordinate.latitude
-    : (result.rawData as any).displayCoordinate.latitude;
-  const lng = result.rawData.yextDisplayCoordinate
-    ? (result.rawData as any).yextDisplayCoordinate.longitude
-    : (result.rawData as any).displayCoordinate.longitude;
+  const lat = (result.rawData as any).yextDisplayCoordinate.latitude;
+  const lng = (result.rawData as any).yextDisplayCoordinate.longitude;
   return { lat, lng };
 }
 
-function scrollToRow(index: any) {
-  const result: any = [].slice.call(
+// export function scrollToRow(index: any) {
+//   let result = [].slice.call(document.querySelectorAll(".result") || [])[0];
+//   let offset = 0;
+//   if (typeof [].slice.call(document.querySelectorAll(".result") || [])[index] != 'undefined') {
+//     offset = [].slice.call(document.querySelectorAll(".result") || [])[index].offsetTop - result.offsetTop;
+//     [].slice.call(document.querySelectorAll(".result-list") || []).forEach(function (el) { el.scrollTop = offset; });
+//   }
+// }
+export function scrollToRow(index: any) {
+  let result: any = [].slice.call(
     document.querySelectorAll(`.result`) || []
   )[0];
-  const offset: any = [].slice.call(document.querySelectorAll(`.result`) || [])[
+  let offset: any = [].slice.call(document.querySelectorAll(`.result`) || [])[
     index
   ];
 
-  // alert(offset.offsetTop-result.offsetTop);
-  const o = offset.offsetTop - result.offsetTop;
+  let o = offset.offsetTop - result.offsetTop;
 
   [].slice
     .call(document.querySelectorAll(".scrollbar-container") || [])
