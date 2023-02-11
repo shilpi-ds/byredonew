@@ -16,7 +16,7 @@ type Props = {
     gdata,
     //global,
     children,
-  }: Props) => { console.log(gdata);
+  }: Props) => { //console.log(gdata);
     return (
         <>
         

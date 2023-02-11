@@ -16,7 +16,7 @@ type props = {
 
   const Footer = (props: any) => {
    const {customercare,footemail,footphone,ByredoHelp, ByredoServices,ByredoLocator } = props;
-console.log(ByredoLocator);
+//console.log(ByredoLocator);
    return (
       <>
        <footer className="site-footer">

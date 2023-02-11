@@ -18,10 +18,10 @@ const HeaderBanner = (props: Banner) => {
     <>
      <div className = "head-text">
   <div className = "head-image">
-  <img src={himage}/>
+  <img src={himage} alt=""/>
   </div>
     <div className='text-on-image'>
-       <h3> {title} </h3>
+       <h1> {title} </h1>
        <p> {description} </p>
     </div>
 </div>

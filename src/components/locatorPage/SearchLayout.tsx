@@ -118,7 +118,7 @@ const loading = useSearchState(s=>s.searchStatus.isLoading);
           }
         },
         (error: any) => {
-          console.error(error);
+          //console.error(error);
           setCheck(false);
         }
       );
@@ -149,7 +149,7 @@ const loading = useSearchState(s=>s.searchStatus.isLoading);
     if(searchKey[0].value!=""){
     getCoordinates(Search);
     }
-    console.log(locationinbuit.length,"fisttimedispaly")
+    //console.log(locationinbuit.length,"fisttimedispaly")
     if(locationinbuit.length==0){
       setDisplaymsg(true)
     }else { 
@@ -203,7 +203,7 @@ const loading = useSearchState(s=>s.searchStatus.isLoading);
     }
     },[locationinbuit])
     useEffect(()=>{
-      console.log("yes rerender")
+      //console.log("yes rerender")
       locationResults.map((result:any, index:number) => {
         const resultelement = document.querySelectorAll(
           `.result-list-inner-${index + 1}`

@@ -99,6 +99,7 @@ export const config: TemplateConfig = {
     "c_metaDescription",
     "c_metaTitle",
     "c_robotsTag",
+    "c_readMore"
     ],
     // Defines the scope of entities that qualify for this stream.
     filter: {
@@ -365,6 +366,7 @@ const Location: Template<ExternalApiRenderData> = ({
     c_relatedFaqs,
     c_title,
     c_image,
+    c_readMore
   } = document;
 
  let templateData = { document: document, __meta: __meta };
@@ -614,20 +616,31 @@ breadcrumbScheme.push({
           }
         </div>
         <div className="about-content">
-                <div className="about-image"><img src={c_image.url} height={500} width={500}/></div>
+        {c_title ?
+        <>
+                <div className="about-image"><img src={c_image.url} height={500} width={500} alt=""/></div>
                 <div className="about-data">
                 <div className="about-title">{c_title}</div>
                 <p className="about-description">{description}</p>
+                {c_readMore.link ?
+                <div className="button-bx direction-button"><a className="Link btn notHighligh" href={c_readMore.link}>{c_readMore.label}</a></div>
+                : ''}
                 </div>
+                </>
+                : ''}
               </div>
+              {photoGallery ?
               <div className="featured">
               <h2>Featured Products</h2>
               <div className="photo-slider">{photoGallery && <PhotoSlider photoGallery={photoGallery}/> }</div>
       </div>
+      : ''}
+      {c_relatedFaqs ?
       <div className="faq-content">
         <div className="faq-title">How can we help ?</div>
         <div className="faqs"><section className="faq-container">{c_relatedFaqs && <Accordion content={c_relatedFaqs}/> }</section></div>
         </div>
+        :''}
         {yextDisplayCoordinate || cityCoordinate || displayCoordinate ?
          <div className="nearby-sec">
           <div className="container">
