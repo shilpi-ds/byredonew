@@ -20,7 +20,7 @@ import { StaticData } from "../../../sites-global/staticData";
 
 import FilterSearch from "../locatorPage/FilterSearch";
 import ViewMore from "./ViewMore";
-import VerticalResults from "../VerticalResults";
+import VerticalResults from "../VerticalResults";;
 import ResultsCount from "./ResultsCount";
 import useFetchResults from "../../hooks/useFetchResults";
 import { Link } from "@mui/material";

@@ -10,6 +10,8 @@ import { Addresssvg, mobilesvg, View_Store } from "../../../sites-global/global"
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 import { Link } from "@yext/pages/components";
 import { StaticData } from "../../../sites-global/staticData";
+import locDetails from "../locDetails";
+import LocDetails from "../locDetails";
 
 export default function Nearby(props: any) {
   
@@ -68,8 +70,13 @@ export default function Nearby(props: any) {
               <>
                 {/* <SplideSlide key={index}> */}
                   <div className="nearby-card">
+                  {/* <LocDetails address={location.data.address.line1} loc1={loc1} loc2={loc2} loc3={loc3} phone={location.data.mainPhone} name={location.data.name} hours={location.data.hours} timezone={location.data.hours.timezone} city={location.data.address.city} postcode={location.data.address.postalCode} addline1={location.data.address.line1} addline2={location.data.address.line2}/>
+           */}
                  <div className="location-name-miles icon-row">
-                     
+                 <div className="icon">
+            {" "}
+            <img className=" " src={loc1} width="20" height="20" alt="mapimage" />
+          </div>
                       <h2><Link className="inline-block notHighlight" href={location.data.slug}
                         data-ya-track={`${location.data.name}`}
                         eventName={`${location.data.name}`}
@@ -84,9 +91,17 @@ export default function Nearby(props: any) {
                       <Address address={location.data.address} />
                     </div>
                     <div className="icon-row content-col">
-                      {location.data.mainPhone}
+                    <div className="icon">
+              {" "}
+              <img className=" " src={loc2} width="22" height="22" alt="phonesvg" />
+            </div>
+                     <div className="mainpho">{location.data.mainPhone}</div> 
                     </div>
                     <div className="icon-row closeing-div">
+                    <div className="icon">
+            {" "}
+            <img className=" " src={loc3} width="22" height="22" alt="watch" />
+          </div>
                     {location.data.hours?
                     <div className="flex open-now-string items-center " data-id={`main-shop-${location.data.id}`} >
                       <OpenClose timezone={location.data.timezone} hours={location.data.hours} deliveryHours={location.data.hours}></OpenClose>

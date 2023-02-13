@@ -866,3 +866,15 @@ margin-top: 20px;
 .closeing-div .notHighlight{
   padding-left: 10px;
 }
+.nearby-card .icon-row h2{
+    padding-left: 30px;
+}
+.nearby-card .address {
+    padding-left: 30px;
+}
+.nearby-card .icon-row .mainpho{
+  padding-left: 30px;
+}
+.nearby-card .closeing-div .notHighlight{
+ padding-left: 30px;
+}

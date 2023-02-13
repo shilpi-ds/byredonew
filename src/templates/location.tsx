@@ -13,6 +13,7 @@ import offerBanner from "../images/offer-banner.jpg"
 import IframeMap from "../components/locationDetail/IframeMap";
 import Address from "../components/commons/Address";
 import OpenClose from "../components/commons/openClose";
+//import LocDetails from "../components/LocDetails";
 import "../index.css";
 import {
   Template,
@@ -56,6 +57,7 @@ import { Fade, Slide } from "react-awesome-reveal";
 import MgmTimber from "../components/locationDetail/MgmTimber";
 import { AnswerExperienceConfig } from "../config/answersHeadlessConfig";
 import GetDirection from "../components/commons/GetDirection";
+import LocDetails from "../components/locDetails";
 /**
  * Required when Knowledge Graph data is used for a template.
  */
@@ -549,46 +551,13 @@ breadcrumbScheme.push({
                 </div> 
             </div>
           </div>
-          <div className="location-information">
+         <div className="location-information">
           <div className="address-main-sec">
-        {/* <h4 className="box-title">{name?name:"Store Details"}</h4> */}
-
-        <div className="icon-row content-col">
-          <div className="icon">
-            {" "}
-            <img className=" " src={loc1} width="20" height="20" alt="mapimage" />
-          </div>
-          <div className="  address-text notHighlight">
-           <div>{name}</div> {address.line1}
-            <div>{address.line2 && <div>{address.line2}</div>}</div>
-            <div>{address.city}</div>
-            <div>{address.postalCode}</div>
-          </div>
-        </div>
-       
-        {mainPhone ? (
-          <div className="icon-row">
-            <div className="icon">
-              {" "}
-              <img className=" " src={loc2} width="22" height="22" alt="phonesvg" />
-            </div>
-            <div className="content-col">
-              <a id="address" className=" location-phn" href={`tel:${mainPhone}`}>
-                {mainPhone}
-              </a>
-            </div>
-          </div>
-        ) : (
-          ""
-        )}
-           {hours && (
-                            <div className="openClosestatus detail-page closeing-div">
-                            <OpenClose timezone={timezone} hours={hours} />
-                          </div> 
-                          )}
+          <LocDetails address={address.line1} loc1={loc1} loc2={loc2} loc3={loc3} phone={mainPhone} name={name} hours={hours} timezone={timezone} city={address.city} postcode={address.postalCode} addline1={address.line1} addline2={address.line2}/>
+          
         <ul className="">
           <li className="button-bx direction-button">{displayCoordinate ?
-          <GetDirection buttonText={StaticData.getDirection} address={address} latitude={displayCoordinate?.latitude} longitude={displayCoordinate?.longitude} />
+          <GetDirection buttonText={StaticData.getDirection} address={address}  latitude={displayCoordinate?.latitude} longitude={displayCoordinate?.longitude} />
           : <GetDirection buttonText={StaticData.getDirection} address={address} latitude={yextDisplayCoordinate?.latitude} longitude={yextDisplayCoordinate?.longitude} />
         }
           </li>

@@ -23,6 +23,12 @@ import getDirectionUrl from "../commons/GetDirection";
 import { slugify, defaultTimeZone } from "../../config/answersHeadlessConfig";
 import $ from "jquery";
 import { Marker } from "mapbox-gl";
+import loc1 from "../../images/loc1.svg";
+import loc2 from "../../images/loc2.svg";
+import loc3 from "../../images/loc3.svg";
+import locDetails from "../locDetails";
+import LocDetails from "../locDetails";
+import GetDirection from "../commons/GetDirection";
 let marker:any;
 /**
  * CSS class interface for the {@link GoogleMaps} component
@@ -536,7 +542,7 @@ function UnwrappedGoogleMaps({
       let slug = slugify(slugString);
       url = `${slug}.html`;
     } else {
-      url = `${result.rawData.slug.toString()}.html`;
+      url = `${result.rawData.slug.toString()}`;
     }
 
     const MarkerContent = (
@@ -547,43 +553,15 @@ function UnwrappedGoogleMaps({
           </h3>
           <p className="miles">{metersToMiles(result.distance ?? 0)} miles</p>
         </div>
-        <Link
-          data-ya-track="getdirections"
-          eventName={`getdirections`}
-          className="addressmob"
-          href="javascript:void(0);"
-          id="some-button"
-          rel="noopener noreferrer"
-        >
-          <Address address={result.rawData.address} />
-        </Link>
-        <Phone phone={result.rawData.mainPhone} />
-        {/* <div>{hours(result.rawData.hours)} </div> */}
+    
+            <LocDetails address={result.rawData.address.line1} loc1={loc1} loc2={loc2} loc3={loc3} phone={result.rawData.mainPhone} name={result.rawData.name} hours={result.rawData.hours} timezone={result.rawData.timezone} city={result.rawData.address.city} postcode={result.rawData.address.postalCode} addline1={result.rawData.address.line1} addline2={result.rawData.address.line2}/>
+            {result.rawData.displayCoordinate ?
+          <GetDirection buttonText="Get Direction" address={result.rawData.address} latitude={result.rawData.displayCoordinate?.latitude} longitude={result.rawData.displayCoordinate?.longitude} />
+          : <GetDirection buttonText="Get Direction" address={result.rawData.address} latitude={result.rawData.yextDisplayCoordinate?.latitude} longitude={result.rawData.yextDisplayCoordinate?.longitude} />
+          }
 
-        {result?.rawData?.hours ? (
-          <>
-            {Object.keys(result?.rawData?.hours).length > 1 ? (
-              <>
-                <div className="icon-row openStatus">
-                  <span className="icon">{svgIcons.openclosestatus}</span>
-                  <OpenCloseStatus
-                    hours={result?.rawData?.hours}
-                    timezone={
-                      result.rawData.timezone
-                        ? result.rawData.timezone
-                        : defaultTimeZone
-                    }
-                  />
-                </div>
-              </>
-            ) : (
-              <></>
-            )}
-          </>
-        ) : (
-          <></>
-        )}
-        <div className="map-buttons md:hidden text-center">
+         
+        {/* <div className="map-buttons md:hidden text-center"> */}
           <Link
             data-ya-track="getdirections"
             eventName={`getdirections`}
@@ -596,13 +574,8 @@ function UnwrappedGoogleMaps({
           >
             <>{svgIcons.GetDirection} Directions </>
           </Link>
-          <Link
-            className="button before-icon ml-2"
-            href={`tel:${result.rawData.mainPhone}`}
-          >
-            {svgIcons.phone} Call
-          </Link>
-        </div>
+        
+        {/* </div> */}
       </div>
     );
     function mobiledirection() {
